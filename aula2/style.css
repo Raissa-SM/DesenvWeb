@@ -1,0 +1,35 @@
+body {
+    background-color: azure;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    font-size: medium;
+}
+
+.cabecalho {
+    display: flex;
+    flex-direction: row;
+}
+
+button {
+    background-color: rgb(206, 224, 224);
+    border-radius: 8px;
+    display: flex;
+    justify-self: center;
+    font-size: large;
+    padding: 8px;
+    margin: 20px;
+}
+
+button:hover {
+    background-color: rgb(163, 255, 255);
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+}
+img {
+    max-width: 100px;
+}
