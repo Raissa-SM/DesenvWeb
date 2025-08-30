@@ -1,0 +1,24 @@
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+fieldset {
+    background-color: rgb(230, 230, 230);
+}
+
+.azul {
+    background-color: rgb(103, 103, 229);
+}
+
+.cinza {
+    background-color: grey;
+}
+
+.cinzaItalico {
+    background-color: grey;
+    font-style: italic;
+}
+
+li {
+    list-style: none;
+}

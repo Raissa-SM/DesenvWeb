@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <title>Cadastro</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>Cadastro Pessoa Física</h1>
+
+        <form action="cadastro.php" method="post">
+            <fieldset>
+                <legend>Cadastro da Pessoa:</legend>
+
+                <div class="azul">
+                    <ul>
+                        <li>
+                            <label for="Nome">Nome</label>
+                            <input id="Nome" type="text" maxlength="100" name="Nome" required>
+                        </li>
+                        <li>
+                            <label for="Sobrenome">Sobrenome</label>
+                            <input id="Sobrenome" type="text" maxlength="100" name="Sobrenome" required>
+                        </li>
+                        <li>
+                            <label for="Email">Email</label>
+                            <input type="email" name="Email" id="Email" required>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="cinzaItalico">
+                    <ul>
+                        <li>
+                            <label for="Nascimento">Data de Nascimento</label>
+                            <input type="date" name="Nascimento" id="Nascimento" min="1920-01-01" max="2024-01-01">
+                        </li>
+                        <li>
+                            <label for="Sexo">Sexo</label>
+                            <input type="radio" name="SexoFeminino" id="SexoFeminino">
+                            <label for="SexoFeminino">Feminino</label>
+                            <input type="radio" name="SexoMasculino" id="SexoMasculino">
+                            <label for="SexoMasculino">Masculino</label>
+                        </li>
+                        <li>
+                            <label for="CorFavorita">Cor Favorita</label>
+                            <input type="color" name="CorFavorita" id="CorFavorita">
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="cinza">
+                    <ul>
+                        <li>
+                            <label for="Endereco">Endereço</label>
+                            <input type="text" maxlength="200">
+                        </li>
+                        <li>
+                            <label for="CEP">CEP</label>
+                            <input type="text" maxlength="200">
+                        </li>
+                        <li>
+                            <label for="Estado">Estado (UF)</label>
+                            <select name="Estado" id="Estado">
+                                <option value="">Selecione...</option>
+                                <option value="AC">Acre</option>
+                                <option value="AL">Alagoas</option>
+                                <option value="AP">Amapá</option>
+                                <option value="AM">Amazonas</option>
+                                <option value="BA">Bahia</option>
+                                <option value="CE">Ceará</option>
+                                <option value="DF">Distrito Federal</option>
+                                <option value="ES">Espírito Santo</option>
+                                <option value="GO">Goiás</option>
+                                <option value="MA">Maranhão</option>
+                                <option value="MT">Mato Grosso</option>
+                                <option value="MS">Mato Grosso do Sul</option>
+                                <option value="MG">Minas Gerais</option>
+                                <option value="PA">Pará</option>
+                                <option value="PB">Paraíba</option>
+                                <option value="PR">Paraná</option>
+                                <option value="PE">Pernambuco</option>
+                                <option value="PI">Piauí</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="RN">Rio Grande do Norte</option>
+                                <option value="RS">Rio Grande do Sul</option>
+                                <option value="RO">Rondônia</option>
+                                <option value="RR">Roraima</option>
+                                <option value="SC">Santa Catarina</option>
+                                <option value="SP">São Paulo</option>
+                                <option value="SE">Sergipe</option>
+                                <option value="TO">Tocantins</option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>    
+                    
+                <input type="submit" value="Enviar">
+                <input type="reset" value="Limpar">
+
+            </fieldset>    
+        </form>
+    </body>
+</html>
