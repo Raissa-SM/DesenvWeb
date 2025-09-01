@@ -1,0 +1,70 @@
+body {
+    background-color: azure;
+    display: flex;
+    flex-direction: column;
+    font-size: medium;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: space-between;
+    margin: 0px 60px 10px 60px;
+}
+
+h1 {
+    margin: 0px 0px 1px 0px;
+}
+
+img {
+    width: 140px;
+    height: 140px;
+    border-radius: 100px;
+    margin-top: 10px;
+}
+
+main {
+    margin: 0px 60px;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0px;
+}
+
+h2 {
+    margin: 10px 0px;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(1, 123, 123);
+}
+
+a:hover {
+    text-shadow: 2px 2px 2px rgb(173, 255, 255);
+}
+
+h3 {
+    margin: 0px;
+}
+
+audio {
+    margin: 10px 0px;
+}
+
+iframe {
+    height: 250px;
+    width: 445px;
+    margin: 10px 0px;
+}
+
+footer {
+    background-color: rgb(214, 255, 255);
+    color: rgb(83, 83, 83);
+    padding: 50px;
+    text-align: center;
+}
