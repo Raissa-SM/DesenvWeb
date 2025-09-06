@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+        <style>
+            .user_pass_fail {
+                border: 3px solid red;
+            }
+        </style>
+
+        <script>
+            function logar() {
+                let usuario = document.getElementById("Login");
+                let senha = document.getElementById("Senha");
+                usuario.classList.remove("user_pass_fail");
+                senha.classList.remove("user_pass_fail");
+
+                if (usuario.value == "user" && senha.value == "pass") {
+                    alert("Login OK!")
+                } else {
+                    usuario.classList.add("user_pass_fail");
+                    senha.classList.add("user_pass_fail");
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Faça seu Login</h1>
+        <label for="Login">Login</label>
+        </br>
+        <input type="text" id="Login">
+
+        </br>
+        <label for="Senha">Senha</label>
+        </br>
+        <input type="text" id="Senha">
+
+        </br>
+        <button onclick="logar()">Login</button>
+    </body>
+</html>
