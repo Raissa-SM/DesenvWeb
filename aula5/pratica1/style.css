@@ -1,0 +1,51 @@
+body {
+    background-color: rgb(230, 230, 230);
+    display: flex;
+    justify-content: center;
+}
+
+.calculadora {
+    background-color: rgb(162, 162, 162);
+    height: max-content;
+    width: min-content;
+    margin-top: 60px;
+    border-radius: 10px;
+}
+
+.visor,.teclas {
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 10px 0px;
+}
+
+input {
+    width: 260px;
+    height: 60px;
+    font-size: x-large;
+    text-align: right;
+    padding-right: 8px;
+    color: black;
+    border-radius: 5px;
+}
+
+button {
+    height: 60px;
+    width: 60px;
+    margin: 5px;
+    font-size: larger;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #ddd;
+    transform: scale(1.05);
+}
+
+
+
