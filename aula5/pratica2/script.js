@@ -1,18 +1,22 @@
-// Preencher inputs com valores aleatórios entre 0 e 10 (uma casa decimal)
+// Preenchi as notas com números aleatórios para não ter que preencher pra testar
+
 document.querySelectorAll("tbody input").forEach(input => {
     input.value = (Math.random() * 10).toFixed(1);
 });
 
+//Se uma nota for alterada e a coluna/linha estiver ativa deve ser tirada e colocada novamente para recalcular a média
+
 let mediaNotasAtiva = false;
 let mediaAlunosAtiva = false;
 
-// Função para calcular média das colunas
-function toggleMediaNotas() {
+// Funções para calcular as médias e adicionar/remover a coluna/linha no final da tabela
+
+function addMediaNotas() {
     const tabela = document.getElementById("tabela");
     const tbody = tabela.querySelector("tbody");
 
     if (mediaNotasAtiva) {
-        tbody.deleteRow(tbody.rows.length - 1); // remove última linha (médias)
+        tbody.deleteRow(tbody.rows.length - 1);
         mediaNotasAtiva = false;
         return;
     }
@@ -27,7 +31,7 @@ function toggleMediaNotas() {
             const input = tbody.rows[r].cells[col].querySelector("input");
             if (input) {
                 const val = parseFloat(input.value);
-                if (!isNaN(val)) {
+                if (Number.isFinite(val)) {
                     soma += val;
                     count++;
                 }
@@ -37,7 +41,6 @@ function toggleMediaNotas() {
         row.insertCell().innerText = media;
     }
 
-    // se a coluna de médias já existe, adicionar "-" no fim
     if (mediaAlunosAtiva) {
         row.insertCell().innerText = "-";
     }
@@ -45,17 +48,15 @@ function toggleMediaNotas() {
     mediaNotasAtiva = true;
 }
 
-// Função para calcular média das linhas
-function toggleMediaAlunos() {
+function addMediaAlunos() {
     const tabela = document.getElementById("tabela");
     const tbody = tabela.querySelector("tbody");
     const header = tabela.querySelector("thead tr:last-child");
 
     if (mediaAlunosAtiva) {
-        // remover última célula do cabeçalho
+        
         header.deleteCell(header.cells.length - 1);
 
-        // remover última célula de todas as linhas (inclusive linha de médias de notas se existir)
         for (let r = 0; r < tbody.rows.length; r++) {
             tbody.rows[r].deleteCell(tbody.rows[r].cells.length - 1);
         }
@@ -64,12 +65,10 @@ function toggleMediaAlunos() {
         return;
     }
 
-    // adicionar cabeçalho
     header.insertCell().innerText = "Média";
 
-    // calcular médias
     for (let r = 0; r < tbody.rows.length; r++) {
-        // se for a linha de médias (última linha) e já existe, apenas insere "-"
+        
         if (mediaNotasAtiva && r === tbody.rows.length - 1) {
             tbody.rows[r].insertCell().innerText = "-";
             continue;
@@ -81,7 +80,7 @@ function toggleMediaAlunos() {
             const input = tbody.rows[r].cells[c].querySelector("input");
             if (input) {
                 const val = parseFloat(input.value);
-                if (!isNaN(val)) {
+                if (Number.isFinite(val)) {
                     soma += val;
                     count++;
                 }
