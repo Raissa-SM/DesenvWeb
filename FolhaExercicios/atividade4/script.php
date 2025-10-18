@@ -11,24 +11,17 @@
 
     $val1 = $_POST['v1'];
     $val2 = $_POST['v2'];
-    $val3 = $_POST['v3'];
-    
-    $soma = $val1 + $val2 + $val3;
+        
+    $area = $val1 * $val2;
 
-    if ($val1 > 10) {
-        $cor = 'azul';
+    if ($area > 10) {
+        $h = 'h1';
     } 
-    else if ($val2 < $val3) {
-        $cor = 'verde';
-    } 
-    else if ($val3 < $val1 AND $val3 < $val2) {
-        $cor = 'vermelho';
-    }
     else {
-        $cor = '';
+        $h = 'h3';
     }
-    echo "<p>Valores: $val1, $val2 e $val3</p>";
-    echo "<p class=$cor>Soma: $soma</p>";
+    
+    echo "<$h>A área do retângulo de lados $val1 e $val2 metros é $area metros quadrados.</$h>";
 
     echo "<a href='javascript:history.go(-1)'>Voltar</a></br>"; 
     echo "<a href='javascript:history.go(-2)'>Início</a>"; 

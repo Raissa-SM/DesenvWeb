@@ -1,0 +1,54 @@
+body {
+    margin: 60px;
+    display: flex;
+    flex-direction: column;
+}
+
+.atividades {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+a {
+    text-decoration: none;
+    background-color: aliceblue;
+    border-radius: 5px;
+    color: black;
+    padding: 4px;
+    max-width: fit-content;
+}
+
+button {
+    text-decoration: none;
+    background-color: aliceblue;
+    border-radius: 8px;
+    padding: 5px;
+    border: none;
+    max-width: fit-content;
+}
+
+input {
+    border-radius: 5px;
+    border-width: 1px;
+    max-width: 70px;
+    padding: 3px 0px 3px 5px;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-top: 0px;
+    margin-bottom: 8px;
+}
+
+.azul {
+    color: blue;
+}
+
+.verde {
+    color: green;
+}
+
+.vermelho {
+    color: red;
+}
