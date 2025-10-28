@@ -46,6 +46,6 @@ if (!empty($busca)) {
 </table>
 
 <br><br>
-<a href="cadastro.html">Voltar</a>
+<a href="cadpessoa.html">Voltar</a>
 
 <?php pg_close($conn); ?>

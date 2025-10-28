@@ -1,2 +1,5 @@
-poi;sdfsdf;aaaa@f;123;fsdfsdf;PE
-poi;sdfsdf;aaaa@f;cfx;fsdfsdf;PI
+Raíssa;Sofka Mazzi;raissa.mazzi@unidavi.edu.br;123456;Rio do Sul;SC
+Johann;Malkowski;johann.malkowski@unidavi.edu.br;123456;Rio do Sul;SC
+Melissa;Minatti;melissa.minatti@unidavi.edu.br;123456;Rio do Sul;SC
+João;Silva;joao.silva@unidavi.edu.br;123456;Lontras;PR
+Maria;Silva;maria.silva@unidavi.edu.br;123456;Curitiba;GO

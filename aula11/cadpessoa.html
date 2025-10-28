@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <title>Cadastro</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>Cadastro Pessoa Física</h1>
+
+        <form action="processaPessoa.php" method="post">
+            <fieldset>
+                <legend>Identificação</legend>
+                <ul>
+                    <li>
+                        <label for="Nome">Nome</label>
+                        <input id="Nome" type="text" maxlength="100" name="Nome" required>
+                    </li>
+                    <li>
+                        <label for="Sobrenome">Sobrenome</label>
+                        <input id="Sobrenome" type="text" maxlength="100" name="Sobrenome" required>
+                    </li>
+                    <li>
+                        <label for="Email">Email</label>
+                        <input type="email" name="Email" id="Email" required>
+                    </li>
+                    <li>
+                        <label for="Senha">Senha</label>
+                        <input id="Senha" type="password" maxlength="100" name="Senha" required>
+                    </li>
+                </ul>
+            </fieldset>
+            <fieldset>
+                <legend>Residência</legend>
+                <ul>
+                    <li>
+                        <label for="Cidade">Cidade</label>
+                        <input type="text" name="Cidade" maxlength="50">
+                    </li>
+                    <li>
+                        <label for="Estado">Estado (UF)</label>
+                        <select name="Estado" id="Estado">
+                            <option value="">Selecione...</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
+                    </li>
+                </ul>
+            </fieldset>
+            <div class="botoes">
+                <input type="submit" name="acao" value="Salvar no Banco">
+                <input type="submit" name="acao" value="Salvar em Arquivo">
+                <input type="reset" value="Limpar">
+            </div>
+        </form>
+        <br><a href="listaPessoas.php">Listar Pessoas</a>
+    </body>
+</html>

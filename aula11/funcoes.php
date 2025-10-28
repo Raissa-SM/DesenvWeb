@@ -2,7 +2,7 @@
 define('DB_HOST', 'localhost');
 define('DB_PORT', '5432');
 define('DB_USER', 'postgres');
-define('DB_PASS', 'unidavi');
+define('DB_PASS', 'Rasm@1507');
 define('DB_NAME', 'local');
 
 function conectarBanco() {
@@ -37,7 +37,7 @@ function salvarTxt($aDados) {
 }
 
 function salvarJson($aDados) {
-    $arquivo = 'cadastro_pessoa.json';
+    $arquivo = 'pessoas.json';
     $dados = file_exists($arquivo) ? json_decode(file_get_contents($arquivo), true) : [];
     $dados[] = $aDados;
     file_put_contents($arquivo, json_encode($dados));
