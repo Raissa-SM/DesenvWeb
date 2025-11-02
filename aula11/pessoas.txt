@@ -3,3 +3,8 @@ Johann;Malkowski;johann.malkowski@unidavi.edu.br;123456;Rio do Sul;SC
 Melissa;Minatti;melissa.minatti@unidavi.edu.br;123456;Rio do Sul;SC
 João;Silva;joao.silva@unidavi.edu.br;123456;Lontras;PR
 Maria;Silva;maria.silva@unidavi.edu.br;123456;Curitiba;GO
+Nádia;Sofka Mazzi;nadia-ssm@hotmail.com;123456;Rio do Sul;SC
+Cláudio;Mazzi;claudiomazzi@gmail.com;123456;Rio do Sul;SC
+Felipe;Sofka Mazzi;felipesmazzi@gmail.com;123456;Rio do Sul;SC
+Letícia;Sofka Mazzi;leh2000@gmail.com;123456;Campinas;SP
+Lucas;Alkmin;alkminluke@gmail.com;123456;Campinas;SP
