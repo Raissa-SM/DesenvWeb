@@ -1,0 +1,122 @@
+[
+    {
+        "nome": "Ra\u00edssa",
+        "sobreNome": "Sofka Mazzi",
+        "dataNascimento": "15-07-2005",
+        "cpfCnpj": "090.257.019-65",
+        "tipo": 1,
+        "endereco": {
+            "logradouro": "Rua Cleto Barros Westphalen",
+            "bairro": "Sumar\u00e9",
+            "cidade": "Rio do Sul",
+            "estado": "SC",
+            "cep": "89165-546"
+        },
+        "contatos": [
+            {
+                "nome": "Email Pessoal",
+                "valor": "raissamazzi@gmail.com"
+            },
+            {
+                "nome": "WhatsApp",
+                "valor": "(47) 99997-1487"
+            }
+        ]
+    },
+    {
+        "nome": "Cl\u00e1udio",
+        "sobreNome": "Mazzi",
+        "dataNascimento": "29-01-1971",
+        "cpfCnpj": "725.117.459-68",
+        "tipo": 1,
+        "endereco": {
+            "logradouro": "Rua Cleto Barros Westphalen",
+            "bairro": "Sumar\u00e9",
+            "cidade": "Rio do Sul",
+            "estado": "SC",
+            "cep": "89165-546"
+        },
+        "contatos": [
+            {
+                "nome": "Email Pessoal",
+                "valor": "claudiomazzi@gmail.com"
+            },
+            {
+                "nome": "WhatsApp",
+                "valor": "(47) 99988-8551"
+            }
+        ]
+    },
+    {
+        "nome": "N\u00e1dia",
+        "sobreNome": "Sofka Mazzi",
+        "dataNascimento": "18-03-1964",
+        "cpfCnpj": "482.278.709-53",
+        "tipo": 1,
+        "endereco": {
+            "logradouro": "Rua Cleto Barros Westphalen",
+            "bairro": "Sumar\u00e9",
+            "cidade": "Rio do Sul",
+            "estado": "SC",
+            "cep": "89165-546"
+        },
+        "contatos": [
+            {
+                "nome": "Email Pessoal",
+                "valor": "nadia-ssm@gmail.com"
+            },
+            {
+                "nome": "WhatsApp",
+                "valor": "(47) 99998-4485"
+            }
+        ]
+    },
+    {
+        "nome": "Let\u00edcia",
+        "sobreNome": "Sofka Mazzi",
+        "dataNascimento": "07-06-2000",
+        "cpfCnpj": "090.256.999-60",
+        "tipo": 1,
+        "endereco": {
+            "logradouro": "Av Governador Pedro de Toledo",
+            "bairro": "Botafogo",
+            "cidade": "Campinas",
+            "estado": "SP",
+            "cep": "13070-752"
+        },
+        "contatos": [
+            {
+                "nome": "Email Pessoal",
+                "valor": "leticiasmazzi@gmail.com"
+            },
+            {
+                "nome": "WhatsApp",
+                "valor": "(47) 99993-9206"
+            }
+        ]
+    },
+    {
+        "nome": "Felipe",
+        "sobreNome": "Sofka Mazzi",
+        "dataNascimento": "14-01-2004",
+        "cpfCnpj": "090.257.009-93",
+        "tipo": 1,
+        "endereco": {
+            "logradouro": "Rua Cleto Barros Westphalen",
+            "bairro": "Sumar\u00e9",
+            "cidade": "Rio do Sul",
+            "estado": "SC",
+            "cep": "89165-546"
+        },
+        "contatos": [
+            {
+                "nome": "Email Pessoal",
+                "valor": "felipesmazzi@gmail.com"
+            },
+            {
+                "nome": "WhatsApp",
+                "valor": "(47) 99653-0029"
+            }
+        ]
+    }
+]

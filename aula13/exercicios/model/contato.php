@@ -23,6 +23,14 @@
             }
         }
 
+        public function toArray() {
+            return [
+                "nome" => $this->nome,
+                "valor" => $this->valor
+            ];
+        }
+
+
         // Getters and Setters
         public function getTipo() {
             return $this -> tipo;

@@ -1,0 +1,55 @@
+----------------------------------------
+Nome: Raíssa Sofka Mazzi
+Idade: 20
+Tipo: Física
+CPF/CNPJ: 090.257.019-65
+Endereço: Rua Cleto Barros Westphalen, Sumaré
+Rio do Sul - SC | CEP: 89165-546
+Contatos: 
+ - Email: raissamazzi@gmail.com
+ - Telefone: (47) 99997-1487
+
+----------------------------------------
+Nome: Cláudio Mazzi
+Idade: 54
+Tipo: Física
+CPF/CNPJ: 725.117.459-68
+Endereço: Rua Cleto Barros Westphalen, Sumaré
+Rio do Sul - SC | CEP: 89165-546
+Contatos: 
+ - Email: claudiomazzi@gmail.com
+ - Telefone: (47) 99988-8551
+
+----------------------------------------
+Nome: Nádia Sofka Mazzi
+Idade: 61
+Tipo: Física
+CPF/CNPJ: 482.278.709-53
+Endereço: Rua Cleto Barros Westphalen, Sumaré
+Rio do Sul - SC | CEP: 89165-546
+Contatos: 
+ - Email: nadia-ssm@gmail.com
+ - Telefone: (47) 99998-4485
+
+----------------------------------------
+Nome: Letícia Sofka Mazzi
+Idade: 25
+Tipo: Física
+CPF/CNPJ: 090.256.999-60
+Endereço: Av Governador Pedro de Toledo, Botafogo
+Campinas - SP | CEP: 13070-752
+Contatos: 
+ - Email: leticiasmazzi@gmail.com
+ - Telefone: (47) 99993-9206
+
+----------------------------------------
+Nome: Felipe Sofka Mazzi
+Idade: 21
+Tipo: Física
+CPF/CNPJ: 090.257.009-93
+Endereço: Rua Cleto Barros Westphalen, Sumaré
+Rio do Sul - SC | CEP: 89165-546
+Contatos: 
+ - Email: felipesmazzi@gmail.com
+ - Telefone: (47) 99653-0029
+

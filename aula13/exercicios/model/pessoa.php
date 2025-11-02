@@ -74,6 +74,23 @@
             }
         }
 
+        public function toJson() {
+            return json_encode($this->toArray(), JSON_PRETTY_PRINT);
+        }
+
+        public function toArray() {
+            return [
+                "nome" => $this->nome,
+                "sobreNome" => $this->sobreNome,
+                "dataNascimento" => $this->dataNascimento -> format('d-m-Y'),
+                "cpfCnpj" => $this->cpfCnpj,
+                "tipo" => $this->tipo,
+                "endereco" => $this->endereco ? $this->endereco->toArray() : null,
+                "contatos" => array_map(function($c){
+                    return $c->toArray();
+                }, $this->contato)
+            ];
+        }
 
         // Getters and Setters
         public function getNome() {

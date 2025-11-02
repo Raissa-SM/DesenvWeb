@@ -14,6 +14,16 @@
             $this -> cep = $cep;
         }
 
+        public function toArray() {
+            return [
+                "logradouro" => $this->logradouro,
+                "bairro" => $this->bairro,
+                "cidade" => $this->cidade,
+                "estado" => $this->estado,
+                "cep" => $this->cep
+            ];
+        }
+
         // Getters and Setters
         public function getLogradouro() {
             return $this -> logradouro;
