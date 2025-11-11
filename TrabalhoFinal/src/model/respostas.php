@@ -1,5 +1,5 @@
 <?php
-    require_once "db.php";
+    require_once "../src/db.php";
 
     class Respostas {
         private $numero; // número da pergunta
@@ -7,10 +7,11 @@
         private $valor;  // número ou texto
         private $id_avaliacao;
 
-        public function __construct($numero, $tipo, $valor, $id_avaliacao) {
+        public function __construct($numero, $tipo, $valor, $id_pergunta, $id_avaliacao) {
             $this->numero = $numero;
             $this->tipo = $tipo;
             $this->valor = $valor;
+            $this->id_pergunta = $id_pergunta;
             $this->id_avaliacao = $id_avaliacao;
         }
 

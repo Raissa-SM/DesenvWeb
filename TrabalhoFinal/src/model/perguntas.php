@@ -1,8 +1,10 @@
 <?php
-    require_once "db.php";
-    require_once "respostas.php";
+    require_once "../src/db.php";
+    // require_once "../src/funcoes.php";
+    // require_once "respostas.php";
 
     class Perguntas {
+        private $id; //id da pergunta no banco
         private $numero; //Ordem de aparição da perguntas
         private $texto; //Texto que irá aparecer na tela
         private $tipo; //1 - Respostas de 0 a 10 | 0 - Resposta descritiva
@@ -13,25 +15,21 @@
             $this -> tipo = 1;
             $this -> status = 1;
         }
-        
-        public function setPerguntaDb($conn) {
-            try {
-                $sql = "INSERT INTO pergunta (texto_pergunta, numero_pergunta, tipo_pergunta)
-                        VALUES (:texto, :numero, :tipo)";
 
-                $stmt = $conn->prepare($sql);
-
-                $stmt->execute([
-                    ':texto'  => $this -> texto,
-                    ':numero' => $this -> numero,
-                    ':tipo'   => $this -> tipo
-                ]);
-
-                echo "Pergunta inserida com sucesso!";
-
-            } catch (PDOException $e) {
-                echo "Erro ao inserir pergunta: " . $e->getMessage();
+        public static function dbAtivasParaObjeto() {
+            $perguntas = getPerguntasDb();
+            $objetos = array();
+            foreach($perguntas as $p) {
+                $i = new self($p['texto_pergunta']);
+                $i -> id = $p['id_pergunta'];
+                $i -> tipo = $p['tipo_pergunta'];
+                array_push($objetos,$i);
             }
+            return $objetos;
+        }
+        
+        public function perguntaParaDb() {
+            setPerguntaDb($this);
         }
 
         public function responderPergunta($valor) {
@@ -62,9 +60,6 @@
 
         public function setTipo($tipo) {
             $this -> tipo = $tipo;
-            if ($tipo == false) {
-                $this -> numero = 0;
-            }
         }
 
         public function getStatus() {
