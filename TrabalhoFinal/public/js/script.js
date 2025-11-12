@@ -2,21 +2,32 @@ function iniciarAvaliacao() {
     const perguntas = document.querySelectorAll(".pergunta");
     const btnVoltar = document.getElementById("btnVoltar");
     const btnSubmit = document.getElementById("btnSubmit");
+    const form = document.getElementById("formAvaliacao");
 
     let indiceAtual = 0;
 
-    // Esconde todas e mostra apenas a primeira pergunta
-    perguntas.forEach((p, i) => {
-        if (i === 0) {
-            p.classList.remove("oculto");
-        }
-    });
+    // Mostra apenas a primeira pergunta
+    perguntas[0].classList.remove("oculto");
 
     // Adiciona evento a cada botão de resposta
     document.querySelectorAll(".btnResposta").forEach(btn => {
         btn.addEventListener("click", () => {
-            const index = parseInt(btn.dataset.index);
-            mostrarProxima(index);
+            const idPergunta = btn.dataset.idpergunta;
+            const nota = btn.value;
+
+            // cria/atualiza input hidden com nome = respostas[id_pergunta]
+            let hidden = form.querySelector(`input[name="respostas[${idPergunta}]"]`);
+            if (!hidden) {
+                hidden = document.createElement('input');
+                hidden.type = 'hidden';
+                hidden.name = `respostas[${idPergunta}]`;
+                form.appendChild(hidden);
+            }
+            hidden.value = nota;
+
+            const perguntaAtual = btn.closest(".pergunta");
+            const indexAtual = parseInt(perguntaAtual.dataset.index);
+            mostrarProxima(indexAtual);
         });
     });
 
@@ -27,7 +38,6 @@ function iniciarAvaliacao() {
         // Verifica se existe próxima pergunta
         if (indexAtual + 1 < perguntas.length) {
             perguntas[indexAtual + 1].classList.remove("oculto");
-            
             indiceAtual = indexAtual + 1;
             
             // Se for a última, mostra o botão
@@ -58,6 +68,28 @@ function iniciarAvaliacao() {
             indiceAtual--;
         }
     }
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault(); // evita o submit normal
+
+        const dados = new FormData(form); // pega todos os campos do form
+
+        try {
+            const response = await fetch("../src/controller/AvaliacaoController.php", {
+                method: "POST",
+                body: dados,
+            });
+
+            if (response.ok) {
+                window.location.href = "obrigado.html";
+            } else {
+                alert("Erro ao enviar avaliação!");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Falha na comunicação com o servidor.");
+        }
+    });
 }
 
 function obigadoTimeout() {

@@ -1,73 +1,89 @@
 <?php
     require_once "../src/db.php";
-    // require_once "../src/funcoes.php";
-    // require_once "respostas.php";
 
     class Perguntas {
-        private $id; //id da pergunta no banco
-        private $numero; //Ordem de aparição da perguntas
-        private $texto; //Texto que irá aparecer na tela
-        private $tipo; //1 - Respostas de 0 a 10 | 0 - Resposta descritiva
-        private $status; // 1 - ativo | 0 - inativo
+        private $id_pergunta; //id da pergunta no banco
+        private $numero_pergunta; //Ordem de aparição da perguntas
+        private $texto_pergunta; //Texto que irá aparecer na tela
+        private $tipo_pergunta; //1 - Respostas de 0 a 10 | 0 - Resposta descritiva
+        private $status_pergunta; // 1 - ativo | 0 - inativo
 
-        public function __construct($texto) {
-            $this -> texto = $texto;
-            $this -> tipo = 1;
-            $this -> status = 1;
+        public function __construct($texto_pergunta, $numero_pergunta = null, $tipo_pergunta = 1, $status_pergunta = 1) {
+            $this->texto_pergunta = $texto_pergunta;
+            $this->numero_pergunta = $numero_pergunta;
+            $this->tipo_pergunta = $tipo_pergunta;
+            $this->status_pergunta = $status_pergunta;
         }
 
-        public static function dbAtivasParaObjeto() {
-            $perguntas = getPerguntasDb();
-            $objetos = array();
-            foreach($perguntas as $p) {
-                $i = new self($p['texto_pergunta']);
-                $i -> id = $p['id_pergunta'];
-                $i -> tipo = $p['tipo_pergunta'];
-                array_push($objetos,$i);
+        public function save(PDO $conn) {
+            $sql = "INSERT INTO pergunta (texto_pergunta, numero_pergunta, tipo_pergunta, status_pergunta)
+                    VALUES (:texto, :numero, :tipo, :status)";
+            $stmt = $conn->prepare($sql);
+            $ok = $stmt->execute([
+                ':texto' => $this->texto_pergunta,
+                ':numero' => $this->numero_pergunta,
+                ':tipo' => $this->tipo_pergunta,
+                ':status' => $this->status_pergunta
+            ]);
+            if ($ok) {
+                $this->id_pergunta = $conn->lastInsertId();
+                return $this->id_pergunta;
             }
-            return $objetos;
-        }
-        
-        public function perguntaParaDb() {
-            setPerguntaDb($this);
+            return false;
         }
 
-        public function responderPergunta($valor) {
-            return new Respostas($this-> numero, $this -> tipo, $valor);
-        }
+        public static function getAtivas(PDO $conn) {
+            $sql = "SELECT * FROM pergunta WHERE status_pergunta = '1' ORDER BY numero_pergunta";
+            $stmt = $conn->query($sql);
+            $dados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+            $perguntas = [];
+            foreach ($dados as $p) {
+                $obj = new self($p['texto_pergunta'], 
+                               $p['numero_pergunta'], 
+                                 $p['tipo_pergunta'], 
+                               $p['status_pergunta']);
+                $obj->id_pergunta = $p['id_pergunta'];
+                $perguntas[] = $obj;
+            }
+            return $perguntas;
+        }
 
         //GETTERS E SETTERS
-        public function getNumero() {
-            return $this -> numero;
+        public function getId() { 
+            return $this->id_pergunta; 
         }
 
-        public function setNumero($numero) {
-            $this -> numero = $numero;
+        public function getNumero() { 
+            return $this->numero_pergunta; 
         }
 
-        public function getTexto() {
-            return $this -> texto;
+        public function setNumero($num) { 
+            $this->numero_pergunta = $num; 
         }
 
-        public function setTexto($texto) {
-            $this -> texto = $texto;
+        public function getTexto() { 
+            return $this->texto_pergunta; 
         }
 
-        public function getTipo() {
-            return $this -> tipo;
+        public function setTexto($txt) { 
+            $this->texto_pergunta = $txt; 
         }
 
-        public function setTipo($tipo) {
-            $this -> tipo = $tipo;
+        public function getTipo() { 
+            return $this->tipo_pergunta; 
         }
 
-        public function getStatus() {
-            return $this -> status;
+        public function setTipo($tipo) { 
+            $this->tipo_pergunta = $tipo; 
         }
 
-        public function setStatus($status) {
-            $this -> status = $status;
+        public function getStatus() { 
+            return $this->status_pergunta; 
         }
+
+        public function setStatus($status) { 
+            $this->status_pergunta = $status; 
+        }        
     }
 ?>

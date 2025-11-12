@@ -1,79 +1,60 @@
 <?php
-    require_once "../src/db.php";
-
     class Respostas {
-        private $numero; // número da pergunta
-        private $tipo;   // 1 = nota, 0 = texto
-        private $valor;  // número ou texto
+        private $id_resposta;
+        private $id_pergunta;
         private $id_avaliacao;
+        private $valor;  // número 0 a 10
 
-        public function __construct($numero, $tipo, $valor, $id_pergunta, $id_avaliacao) {
-            $this->numero = $numero;
-            $this->tipo = $tipo;
-            $this->valor = $valor;
+        public function __construct($id_pergunta, $id_avaliacao, $valor) {
             $this->id_pergunta = $id_pergunta;
             $this->id_avaliacao = $id_avaliacao;
+            $this->valor = $valor;
         }
 
-        public function setRespostaDb($conn) {
+        public function save(PDO $conn) {
             try {
-                if ($this->tipo == '1') {
-                    // INSERE RESPOSTA NUMÉRICA
-                    $sql = "INSERT INTO resposta (id_avaliacao, id_pergunta, nota)
-                            VALUES (:avaliacao, :pergunta, :nota)";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->execute([
-                        ':avaliacao' => $this->id_avaliacao,
-                        ':pergunta'  => $this->numero,
-                        ':nota'      => $this->valor
-                    ]);
-                } else {
-                    // ATUALIZA AVALIAÇÃO COM O FEEDBACK
-                    $sql = "UPDATE avaliacao
-                            SET feedback_texto = :texto
-                            WHERE id_avaliacao = :avaliacao";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->execute([
-                        ':texto'     => $this->valor,
-                        ':avaliacao' => $this->id_avaliacao
-                    ]);
-                }
+                $sql = "INSERT INTO resposta (id_avaliacao, id_pergunta, nota) VALUES (:avaliacao, :pergunta, :nota)";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute([
+                    ':avaliacao' => $this->id_avaliacao,
+                    ':pergunta'  => $this->id_pergunta,
+                    ':nota'      => $this->valor
+                ]);
+                $this->id_resposta = $conn->lastInsertId();
+                return true;
             } catch (PDOException $e) {
-                echo "Erro ao inserir resposta: " . $e->getMessage();
+                // logar erro
+                return false;
             }
         }
-
 
         //GETTERS E SETTERS
-        public function getNumero() {
-            return $this -> numero;
-        }
-
-        public function setNumero($numero) {
-            $this -> numero = $numero;
-        }
-
-        public function getTipo() {
-            return $this -> tipo;
-        }
-
-        public function setTipo($tipo) {
-            $this -> tipo = $tipo;
-            if ($tipo == false) {
-                $this -> numero = 0;
-            }
-        }
-
         public function getValor() {
             return $this -> valor;
         }
 
-        public function setVarlor($valor) {
+        public function setValor($valor) {
             $this -> valor = $valor;
         }
 
+        public function getId_resposta() {
+            return $this -> id_resposta;
+        }
+
+        public function setId_resposta($id_resposta) {
+            $this -> id_resposta = $id_resposta;
+        }
+
+        public function getId_pergunta() {
+            return $this -> id_pergunta;
+        }
+
+        public function setId_pergunta($id_pergunta) {
+            $this -> id_pergunta = $id_pergunta;
+        }
+
         public function getId_avaliacao() {
-            return $this -> staid_avaliacaotus;
+            return $this -> id_avaliacao;
         }
 
         public function setId_avaliacao($id_avaliacao) {

@@ -1,5 +1,4 @@
 <?php
-    require_once "../src/db.php";
 
     class Avaliacao {
         private $id_avaliacao;
@@ -12,11 +11,23 @@
             $this->id_setor = $id_setor;
             $this->id_dispositivo = $id_dispositivo;
             $this->feedback_texto = $feedback_texto;
-            $this->dataHora = new DateTime(date('d-m-Y H:m:s'));
+            $this->data_hora = new DateTime();
         }
 
-        public function objetoParaDb() {
-            setAvaliacaoDb($this);
+        public function save(PDO $conn) {
+            $sql = "INSERT INTO avaliacao (id_setor, id_dispositivo, feedback_texto, data_hora) VALUES (:setor, :dispositivo, :feedback, :data_hora)";
+            $stmt = $conn->prepare($sql);
+            $ok = $stmt->execute([
+                ':setor' => $this->id_setor,
+                ':dispositivo' => $this->id_dispositivo,
+                ':feedback' => $this->feedback_texto,
+                ':data_hora' => $this->data_hora->format('Y-m-d H:i:s')
+            ]);
+            if ($ok) {
+                $this->id_avaliacao = $conn->lastInsertId();
+                return $this->id_avaliacao;
+            }
+            return false;
         }
 
         //GETTERS

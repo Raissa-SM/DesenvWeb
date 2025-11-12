@@ -107,17 +107,17 @@ label {
 }
 
 /* Cores progressivas de 0 (vermelho) a 10 (verde) */
-.btnResposta[data-valor="0"]  { background-color: #d32f2f; }
-.btnResposta[data-valor="1"]  { background-color: #e53935; }
-.btnResposta[data-valor="2"]  { background-color: #ef5350; }
-.btnResposta[data-valor="3"]  { background-color: #f57c00; }
-.btnResposta[data-valor="4"]  { background-color: #fb8c00; }
-.btnResposta[data-valor="5"]  { background-color: #fbc02d; }
-.btnResposta[data-valor="6"]  { background-color: #fdd835; }
-.btnResposta[data-valor="7"]  { background-color: #cddc39; }
-.btnResposta[data-valor="8"]  { background-color: #8bc34a; }
-.btnResposta[data-valor="9"]  { background-color: #43a047; }
-.btnResposta[data-valor="10"] { background-color: #2e7d32; }
+.btnResposta[value="0"]  { background-color: #d32f2f; }
+.btnResposta[value="1"]  { background-color: #e53935; }
+.btnResposta[value="2"]  { background-color: #ef5350; }
+.btnResposta[value="3"]  { background-color: #f57c00; }
+.btnResposta[value="4"]  { background-color: #fb8c00; }
+.btnResposta[value="5"]  { background-color: #fbc02d; }
+.btnResposta[value="6"]  { background-color: #fdd835; }
+.btnResposta[value="7"]  { background-color: #cddc39; }
+.btnResposta[value="8"]  { background-color: #8bc34a; }
+.btnResposta[value="9"]  { background-color: #43a047; }
+.btnResposta[value="10"] { background-color: #2e7d32; }
 
 
 /* === BOTÕES GERAIS === */
