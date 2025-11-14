@@ -82,8 +82,12 @@
             return $this->status_pergunta; 
         }
 
-        public function setStatus($status) { 
-            $this->status_pergunta = $status; 
+        public function ativar_pergunta () {
+            $this -> status_pergunta = '1';
+        }
+
+        public function desativar_pergunta () {
+            $this -> status_pergunta = '0';
         }        
     }
 ?>

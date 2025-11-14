@@ -1,1 +1,1 @@
-http://localhost/DesenvWeb/TrabalhoFinal/public/inicio.html
+http://localhost/DesenvWeb/TrabalhoFinal/public/inicio.php

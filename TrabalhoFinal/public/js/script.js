@@ -1,3 +1,36 @@
+const formDispositivo = document.getElementById("formDispositivo");
+
+if (formDispositivo) {
+    formDispositivo.addEventListener("click", async (e) => {
+        if (e.target.tagName === "BUTTON") {
+            e.preventDefault();
+
+            const id_dispositivo = e.target.value;
+            const dados = new FormData();
+            dados.append("acao", "definirDispositivo");
+            dados.append("id_dispositivo", id_dispositivo);
+
+            try {
+                const response = await fetch("../src/db.php", {
+                    method: "POST",
+                    body: dados,
+                });
+
+                const result = await response.json();
+
+                if (result.status === "ok") {
+                    window.location.reload();
+                } else {
+                    alert(result.erro || "Erro ao definir dispositivo!");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Falha de comunicação com o servidor.");
+            }
+        }
+    });
+}
+
 function iniciarAvaliacao() {
     const perguntas = document.querySelectorAll(".pergunta");
     const btnVoltar = document.getElementById("btnVoltar");
@@ -56,7 +89,7 @@ function iniciarAvaliacao() {
     function mostrarAnterior() {
         if (indiceAtual === 0) {
             //se for a primeira volta pro inicio
-            window.location.href = "inicio.html";
+            window.location.href = "inicio.php";
         }
         else {
             perguntas[indiceAtual].classList.add("oculto");
@@ -73,17 +106,20 @@ function iniciarAvaliacao() {
         e.preventDefault(); // evita o submit normal
 
         const dados = new FormData(form); // pega todos os campos do form
-
+        dados.append("acao", "salvarAvaliacao");
+        
         try {
-            const response = await fetch("../src/controller/AvaliacaoController.php", {
+            const response = await fetch("../src/db.php", {
                 method: "POST",
                 body: dados,
             });
 
-            if (response.ok) {
+            const result = await response.json();
+
+            if (result.status === "ok") {
                 window.location.href = "obrigado.html";
             } else {
-                alert("Erro ao enviar avaliação!");
+                alert(result.erro || "Erro ao enviar avaliação!");
             }
         } catch (err) {
             console.error(err);
@@ -94,6 +130,6 @@ function iniciarAvaliacao() {
 
 function obigadoTimeout() {
     setTimeout(() => {
-        window.location.href = "inicio.html";
+        window.location.href = "inicio.php";
     }, 8000);
 }

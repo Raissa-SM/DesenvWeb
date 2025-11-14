@@ -11,6 +11,7 @@ CREATE TABLE setor (
 -- TABELA DE DISPOSITIVOS
 CREATE TABLE dispositivo (
     id_dispositivo SERIAL PRIMARY KEY,
+    id_setor INT REFERENCES setor(id_setor),
     nome_dispositivo VARCHAR(100) NOT NULL,
     status_dispositivo CHAR(1) DEFAULT '1' CHECK (status_dispositivo IN ('0', '1')) -- '1' ATIVO / '0' INATIVO
 );
@@ -28,7 +29,6 @@ CREATE TABLE pergunta (
 -- TABELA DE AVALIAÇÕES
 CREATE TABLE avaliacao (
     id_avaliacao SERIAL PRIMARY KEY,
-    id_setor INT REFERENCES setor(id_setor),
     id_dispositivo INT REFERENCES dispositivo(id_dispositivo),
     feedback_texto TEXT,
     data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
@@ -59,20 +59,20 @@ UNIQUE (id_avaliacao, id_pergunta);
 ------------ INSERTS PARA TESTE ------------
 --------------------------------------------
 
-INSERT INTO setor (nome_setor, status_setor)
+INSERT INTO setor (nome_setor)
 VALUES 
-('Recepção', '1'),
-('Vendas', '1'),
-('Caixa', '1'),
-('Estacionamento', '1'),
-('Limpeza', '1');
+('Recepção'),
+('Vendas'),
+('Caixa'),
+('Estacionamento'),
+('Limpeza');
 
-INSERT INTO dispositivo (nome_dispositivo, status_dispositivo)
+INSERT INTO dispositivo (nome_dispositivo, id_setor)
 VALUES
 ('Tablet Recepção', '1'),
-('Tablet Vendas', '1'),
-('Tablet Caixa', '1'),
-('Tablet Estacionamento', '1');
+('Tablet Vendas', '2'),
+('Tablet Caixa', '3'),
+('Tablet Estacionamento', '4');
 
 INSERT INTO pergunta (texto_pergunta, numero_pergunta)
 VALUES
