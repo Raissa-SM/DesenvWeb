@@ -19,6 +19,7 @@
 </head>
 <body class="tela">
     <div class="container">
+        <?php echo "<div class='identificacao'>" . getDispositivoSetorById($conn, $_SESSION['id_dispositivo']) . "</div>"; ?>
         <div class="texto">
             <h1>Avalie-nos!</h1>
             <h2>Ajude-nos a aprimorar nosso serviço</h2>

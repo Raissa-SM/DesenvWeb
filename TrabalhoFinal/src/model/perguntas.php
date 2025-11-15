@@ -3,12 +3,14 @@
 
     class Perguntas {
         private $id_pergunta; //id da pergunta no banco
+        private $id_setor; //id do setor da pergunta no banco
         private $numero_pergunta; //Ordem de aparição da perguntas
         private $texto_pergunta; //Texto que irá aparecer na tela
         private $tipo_pergunta; //1 - Respostas de 0 a 10 | 0 - Resposta descritiva
         private $status_pergunta; // 1 - ativo | 0 - inativo
 
-        public function __construct($texto_pergunta, $numero_pergunta = null, $tipo_pergunta = 1, $status_pergunta = 1) {
+        public function __construct($id_setor, $texto_pergunta, $numero_pergunta = null, $tipo_pergunta = 1, $status_pergunta = 1) {
+            $this->id_setor = $id_setor;
             $this->texto_pergunta = $texto_pergunta;
             $this->numero_pergunta = $numero_pergunta;
             $this->tipo_pergunta = $tipo_pergunta;
@@ -16,10 +18,11 @@
         }
 
         public function save(PDO $conn) {
-            $sql = "INSERT INTO pergunta (texto_pergunta, numero_pergunta, tipo_pergunta, status_pergunta)
-                    VALUES (:texto, :numero, :tipo, :status)";
+            $sql = "INSERT INTO pergunta (id_setor, texto_pergunta, numero_pergunta, tipo_pergunta, status_pergunta)
+                    VALUES (:setor, :texto, :numero, :tipo, :status)";
             $stmt = $conn->prepare($sql);
             $ok = $stmt->execute([
+                ':setor' => $this->id_setor,
                 ':texto' => $this->texto_pergunta,
                 ':numero' => $this->numero_pergunta,
                 ':tipo' => $this->tipo_pergunta,
@@ -32,16 +35,17 @@
             return false;
         }
 
-        public static function getAtivas(PDO $conn) {
-            $sql = "SELECT * FROM pergunta WHERE status_pergunta = '1' ORDER BY numero_pergunta";
+        public static function getAtivasSetor(PDO $conn, $id_setor) {
+            $sql = "SELECT * FROM pergunta WHERE status_pergunta = '1' AND id_setor = $id_setor ORDER BY numero_pergunta";
             $stmt = $conn->query($sql);
             $dados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             $perguntas = [];
             foreach ($dados as $p) {
-                $obj = new self($p['texto_pergunta'], 
+                $obj = new self($p['id_setor'], 
+                               $p['texto_pergunta'], 
                                $p['numero_pergunta'], 
-                                 $p['tipo_pergunta'], 
+                               $p['tipo_pergunta'], 
                                $p['status_pergunta']);
                 $obj->id_pergunta = $p['id_pergunta'];
                 $perguntas[] = $obj;

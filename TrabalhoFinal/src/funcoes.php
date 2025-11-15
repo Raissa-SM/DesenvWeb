@@ -15,5 +15,22 @@
         }
         return $setores;
     }
+    function getDispositivoSetorById($conn, $id_dispositivo) {
+        $sql = "SELECT d.nome_dispositivo, s.nome_setor
+                FROM dispositivo d
+                JOIN setor s ON d.id_setor = s.id_setor
+                WHERE d.id_dispositivo = :id";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([":id" => $id_dispositivo]);
+
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($resultado) {
+            return $resultado['nome_dispositivo'] . " - " . $resultado['nome_setor'];
+        }
+
+        return null; // caso não encontre
+    }
 ?>
 

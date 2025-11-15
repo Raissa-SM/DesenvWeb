@@ -32,6 +32,24 @@ if (formDispositivo) {
 }
 
 function iniciarAvaliacao() {
+    // === TIMEOUT DE INATIVIDADE ===
+    let timeoutInatividade;
+
+    function resetarTimeout() {
+        clearTimeout(timeoutInatividade);
+        timeoutInatividade = setTimeout(() => {
+            window.location.href = "inicio.php";
+        }, 60000);
+    }
+
+    // Reinicia o timer ao detectar atividade
+    document.addEventListener("mousemove", resetarTimeout);
+    document.addEventListener("mousedown", resetarTimeout);
+    document.addEventListener("touchstart", resetarTimeout);
+    document.addEventListener("keydown", resetarTimeout);
+
+    resetarTimeout();
+
     const perguntas = document.querySelectorAll(".pergunta");
     const btnVoltar = document.getElementById("btnVoltar");
     const btnSubmit = document.getElementById("btnSubmit");

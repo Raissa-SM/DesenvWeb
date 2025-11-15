@@ -71,6 +71,11 @@ footer {
     font-size: 0.9em;
 }
 
+.identificacao {
+    width: 100%;
+    text-align: left;
+}
+
 /* === TÍTULOS E TEXTOS === */
 h1 {
     color: #006b6b;
@@ -194,6 +199,18 @@ button:disabled {
     border-radius: 6px;
     border: 1px solid #ccc;
     margin-top: 10px;
+}
+
+.textareaGrande {
+    width: 90%;
+    max-width: 500px;
+    min-height: 120px;
+    max-height: 350px;
+    padding: 12px;
+    font-size: 1.1em;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    resize: vertical; /* permite aumentar caso queira */
 }
 
 /* === LINKS E ÍCONES === */

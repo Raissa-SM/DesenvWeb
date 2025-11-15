@@ -8,12 +8,16 @@
 <body class="tela" onload="iniciarAvaliacao()">
     <div class="container">
         <form method="POST" id="formAvaliacao">
-
             <?php
+            session_start();
+
             require_once "../src/model/perguntas.php";
+            require_once "../src/funcoes.php";
             require_once "../src/db.php";
 
-            $perguntas = Perguntas::getAtivas($conn);
+            echo "<div class='identificacao'>" . getDispositivoSetorById($conn, $_SESSION['id_dispositivo']) . "</div>";
+
+            $perguntas = Perguntas::getAtivasSetor($conn, $_SESSION['id_setor']);
             $total = count($perguntas);
 
             for ($index = 0; $index < $total; $index++) {
@@ -36,7 +40,7 @@
                     }
                     echo "</div>";
                 } else {
-                    echo "<input type='text' class='inputTexto' name='feedback' placeholder='Digite seu comentário...'>";
+                    echo "<textarea class='inputTexto textareaGrande' name='feedback' placeholder='Digite seu comentário...' rows='4'></textarea>";
                 }
                 echo "</div>";
             }
