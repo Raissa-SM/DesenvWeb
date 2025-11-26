@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Avaliação</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/styleTablet.css">
 </head>
 <body class="tela" onload="iniciarAvaliacao()">
     <div class="container">

@@ -20,7 +20,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/styleTablet.css">
     <script>
         const temDispositivoSelecionado = <?=$temDispositivoSelecionado?>;
     </script>
@@ -43,16 +43,20 @@
 
     <!-- Modal de Login do Tablet -->
     <div class="overlay oculto" id="overlayLogin">
-        <div class="modal">
+        <div class="modal modal-login">
             <h2>Login do Administrador</h2>
 
             <form id="formLoginTablet">
                 <input type="password" id="senhaTablet" placeholder="Digite a senha" required>
-                <button type="submit">Entrar</button>
-                <button type="button" id="fecharLogin">Cancelar</button>
+
+                <div class="botoes">
+                    <button type="submit" class="btnConfirmar">Entrar</button>
+                    <button type="button" id="fecharLogin" class="btnCancelar">Cancelar</button>
+                </div>
             </form>
         </div>
     </div>
+
 
 
     <!-- Modal de Seleção de Dispositivo -->

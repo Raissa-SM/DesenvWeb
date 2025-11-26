@@ -1,0 +1,358 @@
+/* ==========================================================
+   STYLE – INTERFACE DO TABLET
+   Usado em: inicio.php, index.php (perguntas), obrigado.php
+   ========================================================== */
+
+/* ==========================================================
+   1. CONFIGURAÇÃO GLOBAL
+   ========================================================== */
+
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #e0f7f7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #222;
+}
+
+img {
+    max-width: 40px;
+    margin-top: 15px;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+/* ==========================================================
+   2. CONTAINER PRINCIPAL / FORMULÁRIOS / TEXTOS
+   ========================================================== */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 130vh;
+    height: 80vh;
+}
+
+form { 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100%; 
+    width: 100%; 
+}
+
+/* — Identificação do dispositivo — */
+.identificacao {
+    width: 100%;
+    text-align: left;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #006b6b;
+}
+
+/* — Textos gerais — */
+h1 { color: #006b6b; margin-bottom: 10px; }
+h2 { color: #444; font-weight: 500; margin-bottom: 15px; }
+p  { color: #555; margin-bottom: 20px; line-height: 1.4; }
+
+.texto {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* — Estilo específico da tela inicial — */
+.texto h1 {
+    font-size: 2.2em;
+    margin-bottom: 5px;
+}
+
+.texto h2 {
+    font-size: 1.3em;
+    max-width: 600px;
+}
+
+.texto p {
+    max-width: 500px;
+    margin-top: 10px;
+}
+
+.texto button {
+    background-color: #00a0a0;
+    padding: 14px 36px;
+    font-size: 1.3em;
+    margin-top: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    transition: 0.2s ease;
+}
+
+.texto button:hover {
+    background-color: #007878;
+    transform: translateY(-2px);
+}
+
+/* — Botão padrão — */
+button {
+    cursor: pointer;
+    background-color: #00a0a0;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 18px;
+    font-size: 1.1em;
+    transition: background-color 0.2s ease;
+    margin-top: 10px;
+}
+
+button:hover { background-color: #007d7d; }
+button:disabled {
+    background-color: #a5d7d7;
+    cursor: not-allowed;
+}
+
+/* Footer */
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 20px;
+    font-size: 0.9em;
+}
+
+/* ==========================================================
+   3. PERGUNTAS – TELA DE AVALIAÇÃO
+   ========================================================== */
+
+.pergunta {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.pergunta.oculto {
+    display: none;
+}
+
+label {
+    font-size: 1.5em;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+/* — Botões 0 a 10 — */
+.btnResposta {
+    border: none;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin: 5px;
+    font-size: 1.2em;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    min-width: 48px;
+}
+
+.btnResposta:hover {
+    transform: scale(1.08);
+    opacity: 0.9;
+}
+
+/* Cores dos botoes */
+.btnResposta[value="0"]  { background-color: #d32f2f; }
+.btnResposta[value="1"]  { background-color: #e53935; }
+.btnResposta[value="2"]  { background-color: #ef5350; }
+.btnResposta[value="3"]  { background-color: #f57c00; }
+.btnResposta[value="4"]  { background-color: #fb8c00; }
+.btnResposta[value="5"]  { background-color: #fbc02d; }
+.btnResposta[value="6"]  { background-color: #fdd835; }
+.btnResposta[value="7"]  { background-color: #cddc39; }
+.btnResposta[value="8"]  { background-color: #8bc34a; }
+.btnResposta[value="9"]  { background-color: #43a047; }
+.btnResposta[value="10"] { background-color: #2e7d32; }
+
+/* — Textarea — */
+.inputTexto {
+    width: 90%;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+.textareaGrande {
+    width: 90%;
+    max-width: 550px;
+    min-height: 150px;
+    max-height: 350px;
+    padding: 15px;
+    font-size: 1.1em;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    transition: 0.2s;
+}
+
+.textareaGrande:focus {
+    border-color: #00a0a0;
+    box-shadow: 0 0 5px rgba(0,160,160,0.4);
+}
+
+/* — Botões Voltar / Enviar — */
+#btnVoltar {
+    background: #bbb;
+    padding: 12px 22px;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+#btnVoltar:hover { background-color: #00a0a0; }
+
+#btnSubmit {
+    background: #009898;
+    padding: 12px 26px;
+    border-radius: 10px;
+    font-size: 1.2em;
+}
+
+#btnSubmit:hover { background: #007777; }
+
+.enviar.oculto { display: none; }
+
+/* ==========================================================
+   4. MODAIS — LOGIN E SELEÇÃO DE DISPOSITIVO
+   ========================================================== */
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.overlay.oculto { display: none !important; }
+
+/* — Estrutura padrão do modal — */
+.modal {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+/* — Modal login (visual refinado) — */
+.modal-login {
+    width: 85%;
+    max-width: 360px;
+    padding: 35px 30px;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.modal-login h2 {
+    margin-bottom: 20px;
+    color: #006b6b;
+    font-weight: 600;
+}
+
+/* — Inputs do login — */
+#formLoginTablet input {
+    width: 100%;
+    padding: 13px 14px;
+    margin-bottom: 18px;
+    border: 1.8px solid #00a0a0;
+    border-radius: 8px;
+    font-size: 1.1em;
+    transition: 0.2s;
+}
+
+#formLoginTablet input:focus {
+    border-color: #008080;
+    box-shadow: 0 0 6px rgba(0, 160, 160, 0.35);
+}
+
+/* — Botões do login — */
+#formLoginTablet .botoes {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 10px;
+}
+
+#formLoginTablet button {
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* Botão confirmar */
+.btnConfirmar { background-color: #009898; color: #fff; }
+.btnConfirmar:hover { background-color: #007a7a; }
+
+/* Botão cancelar */
+.btnCancelar { background-color: #cccccc; color: #333; }
+.btnCancelar:hover { background-color: #b3b3b3; }
+
+/* ==========================================================
+   5. RESPONSIVIDADE
+   ========================================================== */
+
+@media (max-width: 600px) {
+    .container {
+        padding: 25px;
+        width: 95%;
+        height: auto;
+    }
+
+    .btnResposta {
+        padding: 6px 10px;
+        margin: 2px;
+    }
+
+    .inputTexto {
+        width: 100%;
+    }
+}
