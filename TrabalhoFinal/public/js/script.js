@@ -1,3 +1,101 @@
+// ====== MOSTRAR OVERLAY DE DISPOSITIVOS SE NÃO TIVER SESSÃO ======
+const overlayDispositivo = document.getElementById("overlayDispositivo");
+
+// Se o PHP informou que não existe dispositivo selecionado
+if (typeof temDispositivoSelecionado !== "undefined" && !temDispositivoSelecionado) {
+    if (overlayDispositivo) {
+        overlayDispositivo.classList.remove("oculto");
+    }
+}
+
+
+// ====== ABRIR MODAL DE LOGIN ======
+const btnAdmin = document.getElementById("btnAdmin");
+const overlayLogin = document.getElementById("overlayLogin");
+const formLoginTablet = document.getElementById("formLoginTablet");
+const formLoginAdmin = document.getElementById("formLoginAdmin");
+const fecharLogin = document.getElementById("fecharLogin");
+
+if (btnAdmin) {
+    btnAdmin.addEventListener("click", () => {
+        overlayLogin.classList.remove("oculto");
+    });
+}
+
+if (fecharLogin) {
+    fecharLogin.addEventListener("click", () => {
+        overlayLogin.classList.add("oculto");
+    });
+}
+
+if (formLoginTablet) {
+    formLoginTablet.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const senha = document.getElementById("senhaTablet").value;
+
+        const dados = new FormData();
+        dados.append("acao", "loginTablet");
+        dados.append("senha", senha);
+
+        try {
+            const response = await fetch("../../src/controller/loginController.php", {
+                method: "POST",
+                body: dados
+            });
+
+            const result = await response.json();
+
+            if (result.status === "ok") {
+                overlayLogin.classList.add("oculto");
+                document.getElementById("overlayDispositivo").classList.remove("oculto");
+            } else {
+                alert("Senha incorreta!");
+            }
+
+        } catch (err) {
+            console.error(err);
+            alert("Erro de comunicação.");
+        }
+    });
+}
+
+
+
+// ===== VALIDAR LOGIN DO ADMIN =====
+if (formLoginAdmin) {
+    formLoginAdmin.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const senha = document.getElementById("senhaAdmin").value;
+
+        const dados = new FormData();
+        dados.append("acao", "loginAdmin");
+        dados.append("senha", senha);
+
+        try {
+            const response = await fetch("../../src/controller/loginController.php", {
+                method: "POST",
+                headers: { "X-Requested-With": "XMLHttpRequest" }, // ← IDENTIFICA AJAX
+                body: dados
+            });
+
+            const result = await response.json();
+
+            if (result.status === "ok") {
+                overlayLogin.classList.add("oculto");
+                document.getElementById("overlayDispositivo").classList.remove("oculto");
+            } else {
+                alert("Senha incorreta!");
+            }
+
+        } catch (error) {
+            console.error(error);
+            alert("Erro de comunicação.");
+        }
+    });
+}
+
 const formDispositivo = document.getElementById("formDispositivo");
 
 if (formDispositivo) {
@@ -11,7 +109,7 @@ if (formDispositivo) {
             dados.append("id_dispositivo", id_dispositivo);
 
             try {
-                const response = await fetch("../src/db.php", {
+                const response = await fetch("../../src/controller/dispositivoController.php", {
                     method: "POST",
                     body: dados,
                 });
@@ -127,7 +225,7 @@ function iniciarAvaliacao() {
         dados.append("acao", "salvarAvaliacao");
         
         try {
-            const response = await fetch("../src/db.php", {
+            const response = await fetch("../../src/controller/avaliacaoController.php", {
                 method: "POST",
                 body: dados,
             });

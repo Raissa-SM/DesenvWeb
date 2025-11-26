@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Avaliação</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="tela" onload="iniciarAvaliacao()">
     <div class="container">
@@ -11,11 +11,11 @@
             <?php
             session_start();
 
-            require_once "../src/model/perguntas.php";
-            require_once "../src/funcoes.php";
-            require_once "../src/db.php";
+            require_once __DIR__ . "/../../src/model/perguntas.php";
+            require_once __DIR__ . "/../../src/model/dispositivo.php";
+            require_once __DIR__ . "/../../src/db.php";
 
-            echo "<div class='identificacao'>" . getDispositivoSetorById($conn, $_SESSION['id_dispositivo']) . "</div>";
+            echo "<div class='identificacao'>" . Dispositivo::getDescricaoCompleta($conn, $_SESSION['id_dispositivo']) . "</div>";
 
             $perguntas = Perguntas::getAtivasSetor($conn, $_SESSION['id_setor']);
             $total = count($perguntas);
@@ -53,6 +53,6 @@
     </div>
     
 
-    <script src="js/script.js"></script>
+    <script src="../js/script.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-    require_once "../src/db.php";
+    require_once __DIR__ . "/../db.php";
 
     class Perguntas {
         private $id_pergunta; //id da pergunta no banco

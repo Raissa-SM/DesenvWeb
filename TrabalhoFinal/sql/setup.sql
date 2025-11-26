@@ -50,6 +50,12 @@ CREATE TABLE usuario_admin (
     senha VARCHAR(255) NOT NULL
 );
 
+-- TABELA DE USUÁRIOS TABLETS (somente senha)
+CREATE TABLE usuario_tablet (
+    id_usuario SERIAL PRIMARY KEY,
+    senha VARCHAR(255) NOT NULL
+);
+
 -- Garantir que cada resposta seja de uma pergunta diferente
 ALTER TABLE resposta
 ADD CONSTRAINT unica_pergunta_por_avaliacao
@@ -116,3 +122,7 @@ VALUES
 INSERT INTO usuario_admin (login, senha)
 VALUES 
 ('admin', '1234');
+
+INSERT INTO usuario_tablet (senha)
+VALUES 
+('1234');

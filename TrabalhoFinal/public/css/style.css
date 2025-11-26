@@ -53,6 +53,10 @@ form {
     z-index: 100;
 }
 
+.overlay.oculto {
+    display: none !important;
+}
+
 .modal {
     background: white;
     padding: 40px;
