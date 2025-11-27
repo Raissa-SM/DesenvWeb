@@ -418,3 +418,17 @@ td {
     margin-top: 15px;
     font-size: 0.95em;
 }
+
+.btn-export {
+    display: inline-block;
+    padding: 10px 16px;
+    background: #0077cc;
+    color: #fff;
+    border-radius: 6px;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+.btn-export:hover {
+    background: #005fa3;
+}
