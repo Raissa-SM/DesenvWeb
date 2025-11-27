@@ -9,4 +9,6 @@
         echo json_encode(["erro" => "Erro ao conectar: " . $e->getMessage()]);
         exit;
     } 
+
+    return $conn;
 ?>
