@@ -67,7 +67,7 @@ if (!$session->getDadoSessao('usuario_admin')) {
         </li>
 
         <li>
-            <a href="logout.php">
+            <a href="#" onclick="confirmarLogout(event)">
                 🔒 Sair
             </a>
         </li>
