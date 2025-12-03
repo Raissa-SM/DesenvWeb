@@ -39,12 +39,14 @@ Também inclui um **Painel Administrativo** completo para gestão e visualizaç�
 - HTML5  
 - CSS3 (styleTablet.css e styleAdmin.css)  
 - JavaScript
+- Chart.js (gráficos do dashboard)
 
 ### Backend
 - PHP 8+  
 - PostgreSQL  
 - Arquitetura organizada em controllers e models  
 - Requisições AJAX para operações do painel admin
+- FPDF (geração de relatórios em PDF)
 
 ---
 
