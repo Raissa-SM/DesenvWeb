@@ -208,6 +208,7 @@ label {
 
 .textareaGrande {
     width: 90%;
+    min-width: 400px;
     max-width: 550px;
     min-height: 150px;
     max-height: 350px;

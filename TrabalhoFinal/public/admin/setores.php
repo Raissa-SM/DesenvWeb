@@ -1,8 +1,10 @@
 <?php include __DIR__ . '/layout/header.php'; ?>
 
-<h1>Setores</h1>
+<div class="top-bar">
+    <h1>Setores</h1>
+    <button class="btn" onclick="abrirModalNovoSetor()">+ Novo Setor</button>
+</div>
 
-<button class="btn" onclick="abrirModalNovoSetor()">+ Novo Setor</button>
 
 <div class="tabela-container">
     <table id="tabelaSetores">
@@ -23,8 +25,11 @@
     <div class="modal-content">
         <h3>Novo Setor</h3>
         <input id="novoNomeSetor" placeholder="Nome do setor">
-        <button onclick="salvarNovoSetor()" class="btn">Salvar</button>
-        <button onclick="fecharModais()" class="btn btn-cancel">Cancelar</button>
+        <div class="modal-btns">
+            <button onclick="salvarNovoSetor()" class="btn">Salvar</button>
+            <button onclick="fecharModais()" class="btn btn-cancel">Cancelar</button>    
+        </div>
+        
     </div>
 </div>
 
@@ -34,8 +39,11 @@
         <h3>Editar Setor</h3>
         <input id="editarNomeSetor">
         <input type="hidden" id="editarIdSetor">
-        <button onclick="salvarEdicaoSetor()" class="btn">Atualizar</button>
-        <button onclick="fecharModais()" class="btn btn-cancel">Cancelar</button>
+        <div class="modal-btns">
+            <button onclick="salvarEdicaoSetor()" class="btn">Atualizar</button>
+            <button onclick="fecharModais()" class="btn btn-cancel">Cancelar</button>    
+        </div>
+        
     </div>
 </div>
 

@@ -11,7 +11,7 @@
         }
 
         public static function listar(PDO $conn) {
-            $sql = "SELECT * FROM setor ORDER BY id_setor DESC";
+            $sql = "SELECT * FROM setor ORDER BY id_setor ASC";
             return $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
         }
 

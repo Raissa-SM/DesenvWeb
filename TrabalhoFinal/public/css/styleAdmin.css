@@ -269,33 +269,38 @@ td {
 }
 
 /* ==========================================================
-   MODAIS (opcionais) — para criar/editar
+   MODAIS — para criar/editar
    ========================================================== */
 
-.modal-overlay {
+.modal {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+
+    width: 100vw;
+    height: 100vh;
+
     background: rgba(0,0,0,0.55);
-    display: none;
+    backdrop-filter: blur(3px);
+
+    display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 500;
+
+    z-index: 9999;
 }
 
-.modal-overlay.ativo {
-    display: flex;
+.modal.oculto {
+    display: none !important;
 }
 
-.modal {
+.modal-content {
     background: #fff;
     padding: 25px;
-    border-radius: 12px;
     width: 90%;
     max-width: 420px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    border-radius: 12px;
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.25);
 }
 
 .modal h3 {
@@ -307,10 +312,16 @@ td {
 .modal form select {
     width: 100%;
     padding: 12px;
-    margin-bottom: 15px;
     border-radius: 8px;
     border: 1px solid #ccc;
     font-size: 1em;
+}
+
+.modal-btns {
+    margin-top: 18px;
+    display: flex;
+    justify-content: flex-end; /* direita */
+    gap: 10px;
 }
 
 /* ==========================================================
@@ -500,33 +511,130 @@ td {
     background: #777;
 }
 
-/* ------- OVERLAY DO MODAL ------- */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-
-    background: rgba(0,0,0,0.55);
-    backdrop-filter: blur(3px);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    z-index: 9999;
+/* ===== DESTACAR LINHAS INATIVAS ===== */
+.linha-inativa {
+    background: #f0f0f0 !important;
+    color: #888 !important;
 }
 
-.modal.oculto {
-    display: none !important;
+.linha-inativa td {
+    color: #888 !important;
 }
 
-.modal-content {
-    background: #fff;
-    padding: 25px;
-    width: 380px;
+.linha-inativa:hover {
+    background: #e6e6e6 !important; /* leve destaque no hover */
+}
+
+/* ==========================================================
+   RELATÓRIOS — NOVO SISTEMA (filtros + tabela)
+   ========================================================== */
+
+/* Caixa geral dos filtros */
+.filtros-box {
+    background: white;
+    padding: 18px 22px;
     border-radius: 12px;
-    box-shadow: 0px 10px 30px rgba(0,0,0,0.25);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
 }
 
+/* Linha com filtros lado a lado */
+.filtros-linha {
+    display: flex;
+    gap: 18px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+/* Cada item do filtro */
+.filtro-item {
+    display: flex;
+    flex-direction: column;
+    min-width: 170px;
+}
+
+.filtro-item label {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.filtro-item input,
+.filtro-item select {
+    padding: 10px 12px;
+    font-size: 0.95em;
+    border-radius: 8px;
+    border: 1px solid #bbb;
+    background: #fafafa;
+}
+
+/* Botão aplicar filtro */
+#btnAplicarFiltro {
+    padding: 10px 18px;
+    background: #009898;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#btnAplicarFiltro:hover {
+    background: #007c7c;
+}
+
+/* Tabela de relatórios */
+#tabelaRelatorio {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tabelaRelatorio thead {
+    background: #009898;
+    color: white;
+}
+
+#tabelaRelatorio th,
+#tabelaRelatorio td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: top;
+}
+
+#tabelaRelatorio tbody tr:hover {
+    background: #f5ffff;
+}
+
+/* Coluna de notas — lista vertical */
+.col-notas {
+    white-space: pre-line; /* permite quebra de linha dentro da célula */
+    font-family: "Segoe UI", sans-serif;
+    font-size: 0.95em;
+}
+
+/* Comentários */
+.col-feedback {
+    color: #444;
+    font-style: italic;
+    white-space: pre-line;
+}
+
+/* Exportação */
+.relatorios-botoes {
+    margin-bottom: 20px;
+}
+
+.relatorios-botoes .btn-export {
+    background: #0077cc;
+    padding: 10px 16px;
+    border-radius: 6px;
+    color: white;
+    text-decoration: none;
+    margin-right: 10px;
+    transition: 0.2s;
+}
+
+.relatorios-botoes .btn-export:hover {
+    background: #005fa3;
+}
