@@ -1,13 +1,13 @@
 <?php
     class Setor {
-        private $id_setor;
-        private $nome_setor;
-        private $status_setor; // 1 - ativo | 0 - inativo
+        private $idSetor;
+        private $nomeSetor;
+        private $statusSetor; // 1 - ativo | 0 - inativo
 
-        public function __construct($nome_setor = null, $status = 1, $id = null) {
-            $this->id_setor = $id;
-            $this->nome_setor = $nome_setor;
-            $this->status_setor = $status;
+        public function __construct($nomeSetor = null, $status = 1, $id = null) {
+            $this->idSetor = $id;
+            $this->nomeSetor = $nomeSetor;
+            $this->statusSetor = $status;
         }
 
         public static function listar(PDO $conn) {
@@ -27,8 +27,8 @@
                     VALUES (:nome, :status)";
             $stmt = $conn->prepare($sql);
             $ok = $stmt->execute([
-                ':nome' => $this->nome_setor,
-                ':status' => $this->status_setor
+                ':nome' => $this->nomeSetor,
+                ':status' => $this->statusSetor
             ]);
             return $ok;
         }
@@ -46,24 +46,24 @@
         }
 
         //GETTERS
-        public function getId_setor () {
-            return $this -> id_setor;
+        public function getIdSetor () {
+            return $this -> idSetor;
         }
 
-        public function getNome_setor () {
-            return $this -> nome_setor;
+        public function getNomeSetor () {
+            return $this -> nomeSetor;
         }
 
         public function getStatus () {
-            return $this -> status_setor;
+            return $this -> statusSetor;
         }
 
-        public function ativar_setor () {
-            $this -> status_setor = '1';
+        public function ativarSetor () {
+            $this -> statusSetor = '1';
         }
 
-        public function desativar_setor () {
-            $this -> status_setor = '0';
+        public function desativarSetor () {
+            $this -> statusSetor = '0';
         }
     }
 ?>

@@ -7,15 +7,15 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         //header('Content-Type: application/json');
 
-        $id_dispositivo = $_SESSION['id_dispositivo'] ?? null;
+        $idDispositivo = $_SESSION['id_dispositivo'] ?? null;
         $feedback = $_POST['feedback'] ?? '';
 
-        if (!$id_dispositivo) {
+        if (!$idDispositivo) {
             echo json_encode(["erro" => "Dispositivo não definido."]);
             exit;
         }
 
-        $avaliacao = new Avaliacao($id_dispositivo, $feedback);
+        $avaliacao = new Avaliacao($idDispositivo, $feedback);
         $idAvaliacao = $avaliacao->save($conn);
 
         if (!$idAvaliacao) {
@@ -24,6 +24,14 @@
         }
 
         foreach ($_POST['respostas'] as $idPergunta => $nota) {
+
+            $nota = filter_var($nota, FILTER_VALIDATE_INT);
+
+            if ($nota === false || $nota < 0 || $nota > 10) {
+                echo json_encode(["erro" => "Nota inválida recebida no servidor."]);
+                exit;
+            }
+
             $r = new Respostas($idPergunta, $idAvaliacao, $nota);
             $r->save($conn);
         }

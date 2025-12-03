@@ -1,13 +1,13 @@
 <?php
     class Respostas {
-        private $id_resposta;
-        private $id_pergunta;
-        private $id_avaliacao;
+        private $idResposta;
+        private $idPergunta;
+        private $idAvaliacao;
         private $valor;  // número 0 a 10
 
-        public function __construct($id_pergunta, $id_avaliacao, $valor) {
-            $this->id_pergunta = $id_pergunta;
-            $this->id_avaliacao = $id_avaliacao;
+        public function __construct($idPergunta, $idAvaliacao, $valor) {
+            $this->idPergunta = $idPergunta;
+            $this->idAvaliacao = $idAvaliacao;
             $this->valor = $valor;
         }
 
@@ -16,11 +16,11 @@
                 $sql = "INSERT INTO resposta (id_avaliacao, id_pergunta, nota) VALUES (:avaliacao, :pergunta, :nota)";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute([
-                    ':avaliacao' => $this->id_avaliacao,
-                    ':pergunta'  => $this->id_pergunta,
+                    ':avaliacao' => $this->idAvaliacao,
+                    ':pergunta'  => $this->idPergunta,
                     ':nota'      => $this->valor
                 ]);
-                $this->id_resposta = $conn->lastInsertId();
+                $this->idResposta = $conn->lastInsertId();
                 return true;
             } catch (PDOException $e) {
                 // logar erro
@@ -37,28 +37,28 @@
             $this -> valor = $valor;
         }
 
-        public function getId_resposta() {
-            return $this -> id_resposta;
+        public function getIdResposta() {
+            return $this -> idResposta;
         }
 
-        public function setId_resposta($id_resposta) {
-            $this -> id_resposta = $id_resposta;
+        public function setIdResposta($idResposta) {
+            $this -> idResposta = $idResposta;
         }
 
-        public function getId_pergunta() {
-            return $this -> id_pergunta;
+        public function getIdPergunta() {
+            return $this -> idPergunta;
         }
 
-        public function setId_pergunta($id_pergunta) {
-            $this -> id_pergunta = $id_pergunta;
+        public function setIdPergunta($idPergunta) {
+            $this -> idPergunta = $idPergunta;
         }
 
-        public function getId_avaliacao() {
-            return $this -> id_avaliacao;
+        public function getIdAvaliacao() {
+            return $this -> idAvaliacao;
         }
 
-        public function setId_avaliacao($id_avaliacao) {
-            $this -> id_avaliacao = $id_avaliacao;
+        public function setIdAvaliacao($idAvaliacao) {
+            $this -> idAvaliacao = $idAvaliacao;
         }
     }
 ?>

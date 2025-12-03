@@ -2,53 +2,53 @@
     require_once __DIR__ . "/../db.php";
 
     class Perguntas {
-        private $id_pergunta;
-        private $id_setor;
-        private $numero_pergunta;
-        private $texto_pergunta;
-        private $tipo_pergunta; // '1' nota | '0' texto
-        private $status_pergunta; // '1' ativo | '0' inativo
+        private $idPergunta;
+        private $idSetor;
+        private $numeroPergunta;
+        private $textoPergunta;
+        private $tipoPergunta; // '1' nota | '0' texto
+        private $statusPergunta; // '1' ativo | '0' inativo
 
-        public function __construct($id_setor, $texto_pergunta, $numero_pergunta = null, $tipo_pergunta = '1', $status_pergunta = '1') {
-            $this->id_setor = $id_setor;
-            $this->texto_pergunta = $texto_pergunta;
-            $this->numero_pergunta = $numero_pergunta;
-            $this->tipo_pergunta = $tipo_pergunta;
-            $this->status_pergunta = $status_pergunta;
+        public function __construct($idSetor, $textoPergunta, $numeroPergunta = null, $tipoPergunta = '1', $statusPergunta = '1') {
+            $this->idSetor = $idSetor;
+            $this->textoPergunta = $textoPergunta;
+            $this->numeroPergunta = $numeroPergunta;
+            $this->tipoPergunta = $tipoPergunta;
+            $this->statusPergunta = $statusPergunta;
         }
 
         /* =================== HELPERS PRIVADOS =================== */
 
         // Retorna último número usado (maior número) entre perguntas ativas do setor
-        private static function getUltimoNumero(PDO $conn, $id_setor) {
+        private static function getUltimoNumero(PDO $conn, $idSetor) {
             $q = $conn->prepare("SELECT COALESCE(MAX(numero_pergunta), 0) FROM pergunta WHERE id_setor = :setor AND status_pergunta = '1'");
-            $q->execute([':setor' => $id_setor]);
+            $q->execute([':setor' => $idSetor]);
             return (int)$q->fetchColumn();
         }
 
         // Retorna número da pergunta-texto ativa (se existir), senão null
-        private static function getNumeroTexto(PDO $conn, $id_setor) {
+        private static function getNumeroTexto(PDO $conn, $idSetor) {
             $q = $conn->prepare("SELECT numero_pergunta FROM pergunta WHERE id_setor = :setor AND tipo_pergunta = '0' AND status_pergunta = '1' LIMIT 1");
-            $q->execute([':setor' => $id_setor]);
+            $q->execute([':setor' => $idSetor]);
             $v = $q->fetchColumn();
             return $v === false ? null : (int)$v;
         }
 
         // Retorna true se já existe pergunta texto ativa (opcionalmente exclui um id)
-        private static function existeTextoAtivo(PDO $conn, $id_setor, $excluirId = null) {
+        private static function existeTextoAtivo(PDO $conn, $idSetor, $excluirId = null) {
             if ($excluirId) {
                 $q = $conn->prepare("SELECT COUNT(*) FROM pergunta WHERE id_setor = :setor AND tipo_pergunta = '0' AND status_pergunta = '1' AND id_pergunta <> :id");
-                $q->execute([':setor' => $id_setor, ':id' => $excluirId]);
+                $q->execute([':setor' => $idSetor, ':id' => $excluirId]);
             } else {
                 $q = $conn->prepare("SELECT COUNT(*) FROM pergunta WHERE id_setor = :setor AND tipo_pergunta = '0' AND status_pergunta = '1'");
-                $q->execute([':setor' => $id_setor]);
+                $q->execute([':setor' => $idSetor]);
             }
             return $q->fetchColumn() > 0;
         }
 
         // Move range de números: incrementa ou decrementa por faixa.
         // direction = +1 para empurrar para cima (incrementar), -1 para puxar para baixo (decrementar)
-        private static function moverRange(PDO $conn, $id_setor, $minInclusive, $maxExclusive, $direction) {
+        private static function moverRange(PDO $conn, $idSetor, $minInclusive, $maxExclusive, $direction) {
             if ($direction === 1) {
                 $sql = "UPDATE pergunta SET numero_pergunta = numero_pergunta + 1
                         WHERE id_setor = :setor
@@ -64,14 +64,14 @@
                         AND status_pergunta = '1'";
             }
             $stmt = $conn->prepare($sql);
-            return $stmt->execute([':setor' => $id_setor, ':min' => $minInclusive, ':max' => $maxExclusive]);
+            return $stmt->execute([':setor' => $idSetor, ':min' => $minInclusive, ':max' => $maxExclusive]);
         }
 
         // Compacta numeracao ativa do setor (1..N sem gaps) - útil para sanidade
-        private static function compactarNumeracao(PDO $conn, $id_setor) {
+        private static function compactarNumeracao(PDO $conn, $idSetor) {
             // Obter IDs ordenados por numero_pergunta
             $q = $conn->prepare("SELECT id_pergunta FROM pergunta WHERE id_setor = :setor AND status_pergunta = '1' ORDER BY numero_pergunta");
-            $q->execute([':setor' => $id_setor]);
+            $q->execute([':setor' => $idSetor]);
             $rows = $q->fetchAll(PDO::FETCH_COLUMN);
 
             $num = 1;
@@ -88,29 +88,29 @@
         // SALVAR nova pergunta
         public function save(PDO $conn) {
             // Se for pergunta de texto (tipo = '0') -> sempre vai para final e deve ser única
-            if ($this->tipo_pergunta === '0') {
-                if (self::existeTextoAtivo($conn, $this->id_setor)) {
+            if ($this->tipoPergunta === '0') {
+                if (self::existeTextoAtivo($conn, $this->idSetor)) {
                     return "erro_tipo";
                 }
-                $ultimo = self::getUltimoNumero($conn, $this->id_setor);
-                $this->numero_pergunta = $ultimo + 1; // texto sempre última
+                $ultimo = self::getUltimoNumero($conn, $this->idSetor);
+                $this->numeroPergunta = $ultimo + 1; // texto sempre última
             } else {
                 // valida numero
-                if ($this->numero_pergunta === null || !is_numeric($this->numero_pergunta) || $this->numero_pergunta <= 0) {
+                if ($this->numeroPergunta === null || !is_numeric($this->numeroPergunta) || $this->numeroPergunta <= 0) {
                     return "erro_numero";
                 }
 
                 // Se existe pergunta-texto ativa, não permita número >= posição do texto
-                $numTexto = self::getNumeroTexto($conn, $this->id_setor);
-                if ($numTexto !== null && $this->numero_pergunta >= $numTexto) {
+                $numTexto = self::getNumeroTexto($conn, $this->idSetor);
+                if ($numTexto !== null && $this->numeroPergunta >= $numTexto) {
                     // ajusta para ficar antes da pergunta-texto
-                    $this->numero_pergunta = $numTexto;
+                    $this->numeroPergunta = $numTexto;
                 }
 
                 // Empurrar as perguntas a partir da posição escolhida (incl.)
-                $ultimo = self::getUltimoNumero($conn, $this->id_setor);
+                $ultimo = self::getUltimoNumero($conn, $this->idSetor);
                 // moverRange com maxExclusive = ultimo+1
-                self::moverRange($conn, $this->id_setor, $this->numero_pergunta, $ultimo + 1, 1);
+                self::moverRange($conn, $this->idSetor, $this->numeroPergunta, $ultimo + 1, 1);
             }
 
             // Inserir
@@ -118,11 +118,11 @@
                     VALUES (:setor, :texto, :numero, :tipo, :status)";
             $stmt = $conn->prepare($sql);
             $ok = $stmt->execute([
-                ':setor' => $this->id_setor,
-                ':texto' => $this->texto_pergunta,
-                ':numero' => $this->numero_pergunta,
-                ':tipo' => $this->tipo_pergunta,
-                ':status' => $this->status_pergunta
+                ':setor' => $this->idSetor,
+                ':texto' => $this->textoPergunta,
+                ':numero' => $this->numeroPergunta,
+                ':tipo' => $this->tipoPergunta,
+                ':status' => $this->statusPergunta
             ]);
 
             if ($ok) return $conn->lastInsertId();
@@ -130,13 +130,13 @@
         }
 
         // LISTAR perguntas ativas (usado pelo tablet)
-        public static function getAtivasSetor(PDO $conn, $id_setor) {
+        public static function getAtivasSetor(PDO $conn, $idSetor) {
             $sql = "SELECT * FROM pergunta 
                     WHERE status_pergunta = '1' 
                     AND id_setor = :setor
                     ORDER BY numero_pergunta";
             $stmt = $conn->prepare($sql);
-            $stmt->execute([':setor' => $id_setor]);
+            $stmt->execute([':setor' => $idSetor]);
             $dados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             $perguntas = [];
@@ -148,22 +148,22 @@
                     $p['tipo_pergunta'],
                     $p['status_pergunta']
                 );
-                $obj->id_pergunta = $p['id_pergunta'];
+                $obj->idPergunta = $p['id_pergunta'];
                 $perguntas[] = $obj;
             }
             return $perguntas;
         }
 
         // LISTAR todas por setor (admin)
-        public static function listarPorSetor(PDO $conn, $id_setor) {
+        public static function listarPorSetor(PDO $conn, $idSetor) {
             $sql = "SELECT * FROM pergunta WHERE id_setor = :setor ORDER BY numero_pergunta";
             $stm = $conn->prepare($sql);
-            $stm->execute([':setor' => $id_setor]);
+            $stm->execute([':setor' => $idSetor]);
             return $stm->fetchAll(PDO::FETCH_ASSOC);
         }
 
         // EDITAR pergunta
-        public static function editar(PDO $conn, $id, $texto, $numero, $tipo, $id_setor) {
+        public static function editar(PDO $conn, $id, $texto, $numero, $tipo, $idSetor) {
 
             // Buscar dados atuais
             $old_q = $conn->prepare("SELECT numero_pergunta, tipo_pergunta, status_pergunta 
@@ -182,7 +182,7 @@
 
                 // Se for mudar para TEXTO, verificar se já existe outra ativa
                 if ($tipo == '0') {
-                    if (self::existeTextoAtivo($conn, $id_setor, $id)) {
+                    if (self::existeTextoAtivo($conn, $idSetor, $id)) {
                         return "erro_tipo";
                     }
                 }
@@ -205,14 +205,14 @@
 
             // ---------------- RELAÇÕES PARA PERGUNTAS ATIVAS ---------------- //
 
-            $ultimo = self::getUltimoNumero($conn, $id_setor);
-            $numTexto = self::getNumeroTexto($conn, $id_setor);
+            $ultimo = self::getUltimoNumero($conn, $idSetor);
+            $numTexto = self::getNumeroTexto($conn, $idSetor);
 
             // 1) Se mudar para tipo TEXTO
             if ($tipo == '0') {
 
                 // já existe outra?
-                if ($old_tipo != 0 && self::existeTextoAtivo($conn, $id_setor, $id)) {
+                if ($old_tipo != 0 && self::existeTextoAtivo($conn, $idSetor, $id)) {
                     return "erro_tipo";
                 }
 
@@ -227,10 +227,10 @@
                     UPDATE pergunta 
                     SET numero_pergunta = numero_pergunta - 1
                     WHERE id_setor = :setor AND numero_pergunta > :oldnum AND status_pergunta = '1'
-                ")->execute([':setor' => $id_setor, ':oldnum' => $old_num]);
+                ")->execute([':setor' => $idSetor, ':oldnum' => $old_num]);
 
                 // mover esta para o fim
-                $novoNum = self::getUltimoNumero($conn, $id_setor) + 1;
+                $novoNum = self::getUltimoNumero($conn, $idSetor) + 1;
 
                 $upd = $conn->prepare("
                     UPDATE pergunta 
@@ -254,10 +254,10 @@
             if ($numero != $old_num) {
                 if ($numero < $old_num) {
                     // move para cima
-                    self::moverRange($conn, $id_setor, $numero, $old_num, 1);
+                    self::moverRange($conn, $idSetor, $numero, $old_num, 1);
                 } else {
                     // move para baixo
-                    self::moverRange($conn, $id_setor, $old_num + 1, $numero + 1, -1);
+                    self::moverRange($conn, $idSetor, $old_num + 1, $numero + 1, -1);
                 }
             }
 
@@ -362,15 +362,15 @@
         }
 
         // GETTERS / SETTERS mínimos
-        public function getId() { return $this->id_pergunta; }
-        public function getNumero() { return $this->numero_pergunta; }
-        public function setNumero($num) { $this->numero_pergunta = $num; }
-        public function getTexto() { return $this->texto_pergunta; }
-        public function setTexto($txt) { $this->texto_pergunta = $txt; }
-        public function getTipo() { return $this->tipo_pergunta; }
-        public function setTipo($tipo) { $this->tipo_pergunta = $tipo; }
-        public function getStatus() { return $this->status_pergunta; }
-        public function ativar_pergunta () { $this->status_pergunta = '1'; }
-        public function desativar_pergunta () { $this->status_pergunta = '0'; }
+        public function getId() { return $this->idPergunta; }
+        public function getNumero() { return $this->numeroPergunta; }
+        public function setNumero($num) { $this->numeroPergunta = $num; }
+        public function getTexto() { return $this->textoPergunta; }
+        public function setTexto($txt) { $this->textoPergunta = $txt; }
+        public function getTipo() { return $this->tipoPergunta; }
+        public function setTipo($tipo) { $this->tipoPergunta = $tipo; }
+        public function getStatus() { return $this->statusPergunta; }
+        public function ativarPergunta () { $this->statusPergunta = '1'; }
+        public function desativarPergunta () { $this->statusPergunta = '0'; }
     }
 ?>

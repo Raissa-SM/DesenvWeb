@@ -1,6 +1,5 @@
 <?php
     require_once __DIR__ . "/../../src/db.php";
-    require_once __DIR__ . "/../../src/funcoes.php";
     require_once __DIR__ . "/../../src/model/dispositivo.php";
     session_start();
 

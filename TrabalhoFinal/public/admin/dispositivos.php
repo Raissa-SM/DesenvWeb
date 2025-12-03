@@ -31,7 +31,7 @@
 
         <div class="modal-btns">
             <button onclick="salvarNovoDispositivo()" class="btn">Salvar</button>
-            <button onclick="fecharModais()" class="btn btn-cancel">Cancelar</button>
+            <button onclick="closeAllModals()" class="btn btn-cancel">Cancelar</button>
         </div>
     </div>
 </div>
@@ -47,7 +47,7 @@
 
         <div class="modal-btns">
             <button onclick="salvarEdicaoDispositivo()" class="btn">Atualizar</button>
-            <button onclick="fecharModais()" class="btn btn-cancel">Cancelar</button>
+            <button onclick="closeAllModals()" class="btn btn-cancel">Cancelar</button>
         </div>
     </div>
 </div>

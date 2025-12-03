@@ -27,7 +27,7 @@
         <input id="novoNomeSetor" placeholder="Nome do setor">
         <div class="modal-btns">
             <button onclick="salvarNovoSetor()" class="btn">Salvar</button>
-            <button onclick="fecharModais()" class="btn btn-cancel">Cancelar</button>    
+            <button onclick="closeAllModals()" class="btn btn-cancel">Cancelar</button>    
         </div>
         
     </div>
@@ -41,7 +41,7 @@
         <input type="hidden" id="editarIdSetor">
         <div class="modal-btns">
             <button onclick="salvarEdicaoSetor()" class="btn">Atualizar</button>
-            <button onclick="fecharModais()" class="btn btn-cancel">Cancelar</button>    
+            <button onclick="closeAllModals()" class="btn btn-cancel">Cancelar</button>    
         </div>
         
     </div>

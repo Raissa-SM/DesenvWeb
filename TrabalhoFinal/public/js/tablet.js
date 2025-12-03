@@ -1,248 +1,246 @@
-// ====== MOSTRAR OVERLAY DE DISPOSITIVOS SE NÃO TIVER SESSÃO ======
-const overlayDispositivo = document.getElementById("overlayDispositivo");
+/* =====================================================
+   FUNÇÕES UTILITÁRIAS GERAIS DO TABLET
+   ===================================================== */
 
-// Se o PHP informou que não existe dispositivo selecionado
-if (typeof temDispositivoSelecionado !== "undefined" && !temDispositivoSelecionado) {
-    if (overlayDispositivo) {
-        overlayDispositivo.classList.remove("oculto");
+// Mostrar elemento (overlay, modal etc.)
+function showElement(selector) {
+    const el = document.querySelector(selector);
+    if (el) el.classList.remove("oculto");
+}
+
+// Esconder elemento
+function hideElement(selector) {
+    const el = document.querySelector(selector);
+    if (el) el.classList.add("oculto");
+}
+
+// Fetch POST genérico
+async function post(url, formData) {
+    const response = await fetch(url, { method: "POST", body: formData });
+    return response.json();
+}
+
+// Criar ou atualizar input hidden
+function setHiddenInput(form, name, value) {
+    let hidden = form.querySelector(`input[name="${name}"]`);
+    if (!hidden) {
+        hidden = document.createElement("input");
+        hidden.type = "hidden";
+        hidden.name = name;
+        form.appendChild(hidden);
     }
+    hidden.value = value;
+}
+
+// Timer genérico de inatividade (60s)
+function startInactivityTimer(callback, tempo = 60000) {
+    let timeout;
+    const reset = () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(callback, tempo);
+    };
+
+    ["mousemove", "mousedown", "touchstart", "keydown"]
+        .forEach(ev => document.addEventListener(ev, reset));
+
+    reset();
 }
 
 
-// ====== ABRIR MODAL DE LOGIN ======
-const btnAdmin = document.getElementById("btnAdmin");
+/* =====================================================
+   OVERLAY DE DISPOSITIVO
+   ===================================================== */
+
+if (typeof temDispositivoSelecionado !== "undefined" && !temDispositivoSelecionado) {
+    showElement("#overlayDispositivo");
+}
+
+
+/* =====================================================
+   LOGIN DO ADMIN E DO TABLET
+   ===================================================== */
+
 const overlayLogin = document.getElementById("overlayLogin");
 const formLoginTablet = document.getElementById("formLoginTablet");
 const formLoginAdmin = document.getElementById("formLoginAdmin");
-const fecharLogin = document.getElementById("fecharLogin");
 
-if (btnAdmin) {
-    btnAdmin.addEventListener("click", () => {
-        overlayLogin.classList.remove("oculto");
-    });
-}
+// Abrir modal
+document.getElementById("btnAdmin")?.addEventListener("click", () => {
+    showElement("#overlayLogin");
+});
 
-if (fecharLogin) {
-    fecharLogin.addEventListener("click", () => {
-        overlayLogin.classList.add("oculto");
-    });
-}
+// Fechar modal
+document.getElementById("fecharLogin")?.addEventListener("click", () => {
+    hideElement("#overlayLogin");
+});
 
-if (formLoginTablet) {
-    formLoginTablet.addEventListener("submit", async (e) => {
-        e.preventDefault();
+// Login tablet
+formLoginTablet?.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-        const senha = document.getElementById("senhaTablet").value;
+    const dados = new FormData();
+    dados.append("acao", "loginTablet");
+    dados.append("senha", document.getElementById("senhaTablet").value);
 
-        const dados = new FormData();
-        dados.append("acao", "loginTablet");
-        dados.append("senha", senha);
+    try {
+        const result = await post("../../src/controller/loginController.php", dados);
 
-        try {
-            const response = await fetch("../../src/controller/loginController.php", {
-                method: "POST",
-                body: dados
-            });
-
-            const result = await response.json();
-
-            if (result.status === "ok") {
-                overlayLogin.classList.add("oculto");
-                document.getElementById("overlayDispositivo").classList.remove("oculto");
-            } else {
-                alert("Senha incorreta!");
-            }
-
-        } catch (err) {
-            console.error(err);
-            alert("Erro de comunicação.");
+        if (result.status === "ok") {
+            hideElement("#overlayLogin");
+            showElement("#overlayDispositivo");
+        } else {
+            alert("Senha incorreta!");
         }
-    });
-}
 
+    } catch (err) {
+        console.error(err);
+        alert("Erro de comunicação.");
+    }
+});
 
+// Login admin
+formLoginAdmin?.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-// ===== VALIDAR LOGIN DO ADMIN =====
-if (formLoginAdmin) {
-    formLoginAdmin.addEventListener("submit", async (e) => {
-        e.preventDefault();
+    const dados = new FormData();
+    dados.append("acao", "loginAdmin");
+    dados.append("senha", document.getElementById("senhaAdmin").value);
 
-        const senha = document.getElementById("senhaAdmin").value;
+    try {
+        const result = await post("../../src/controller/loginController.php", dados);
 
-        const dados = new FormData();
-        dados.append("acao", "loginAdmin");
-        dados.append("senha", senha);
-
-        try {
-            const response = await fetch("../../src/controller/loginController.php", {
-                method: "POST",
-                headers: { "X-Requested-With": "XMLHttpRequest" }, // ← IDENTIFICA AJAX
-                body: dados
-            });
-
-            const result = await response.json();
-
-            if (result.status === "ok") {
-                overlayLogin.classList.add("oculto");
-                document.getElementById("overlayDispositivo").classList.remove("oculto");
-            } else {
-                alert("Senha incorreta!");
-            }
-
-        } catch (error) {
-            console.error(error);
-            alert("Erro de comunicação.");
+        if (result.status === "ok") {
+            hideElement("#overlayLogin");
+            showElement("#overlayDispositivo");
+        } else {
+            alert("Senha incorreta!");
         }
-    });
-}
+
+    } catch (err) {
+        console.error(err);
+        alert("Erro de comunicação.");
+    }
+});
+
+
+/* =====================================================
+   SELEÇÃO DO DISPOSITIVO
+   ===================================================== */
 
 const formDispositivo = document.getElementById("formDispositivo");
 
-if (formDispositivo) {
-    formDispositivo.addEventListener("click", async (e) => {
-        if (e.target.tagName === "BUTTON") {
-            e.preventDefault();
+formDispositivo?.addEventListener("click", async (e) => {
+    if (e.target.tagName !== "BUTTON") return;
 
-            const id_dispositivo = e.target.value;
-            const dados = new FormData();
-            dados.append("acao", "definirDispositivo");
-            dados.append("id_dispositivo", id_dispositivo);
+    e.preventDefault();
+    const id = e.target.value;
 
-            try {
-                const response = await fetch("../../src/controller/dispositivoController.php", {
-                    method: "POST",
-                    body: dados,
-                });
+    const dados = new FormData();
+    dados.append("acao", "definirDispositivo");
+    dados.append("id_dispositivo", id);
 
-                const result = await response.json();
+    try {
+        const result = await post("../../src/controller/dispositivoController.php", dados);
 
-                if (result.status === "ok") {
-                    window.location.reload();
-                } else {
-                    alert(result.erro || "Erro ao definir dispositivo!");
-                }
-            } catch (err) {
-                console.error(err);
-                alert("Falha de comunicação com o servidor.");
-            }
+        if (result.status === "ok") {
+            window.location.reload();
+        } else {
+            alert(result.erro || "Erro ao definir dispositivo!");
         }
-    });
-}
+
+    } catch (err) {
+        console.error(err);
+        alert("Falha de comunicação com o servidor.");
+    }
+});
+
+
+/* =====================================================
+   AVALIAÇÃO — PASSO A PASSO DAS PERGUNTAS
+   ===================================================== */
 
 function iniciarAvaliacao() {
-    // === TIMEOUT DE INATIVIDADE ===
-    let timeoutInatividade;
 
-    function resetarTimeout() {
-        clearTimeout(timeoutInatividade);
-        timeoutInatividade = setTimeout(() => {
-            window.location.href = "inicio.php";
-        }, 60000);
-    }
-
-    // Reinicia o timer ao detectar atividade
-    document.addEventListener("mousemove", resetarTimeout);
-    document.addEventListener("mousedown", resetarTimeout);
-    document.addEventListener("touchstart", resetarTimeout);
-    document.addEventListener("keydown", resetarTimeout);
-
-    resetarTimeout();
+    // Timeout de inatividade (60s)
+    startInactivityTimer(() => window.location.href = "inicio.php");
 
     const perguntas = document.querySelectorAll(".pergunta");
-    const btnVoltar = document.getElementById("btnVoltar");
-    const btnSubmit = document.getElementById("btnSubmit");
     const form = document.getElementById("formAvaliacao");
-
     let indiceAtual = 0;
 
-    // Mostra apenas a primeira pergunta
     perguntas[0].classList.remove("oculto");
 
-    // Adiciona evento a cada botão de resposta
+    // Clique nas respostas
     document.querySelectorAll(".btnResposta").forEach(btn => {
+
         btn.addEventListener("click", () => {
-            const idPergunta = btn.dataset.idpergunta;
+            const id = btn.dataset.idpergunta;
             const nota = btn.value;
 
-            // cria/atualiza input hidden com nome = respostas[id_pergunta]
-            let hidden = form.querySelector(`input[name="respostas[${idPergunta}]"]`);
-            if (!hidden) {
-                hidden = document.createElement('input');
-                hidden.type = 'hidden';
-                hidden.name = `respostas[${idPergunta}]`;
-                form.appendChild(hidden);
-            }
-            hidden.value = nota;
+            setHiddenInput(form, `respostas[${id}]`, nota);
 
-            const perguntaAtual = btn.closest(".pergunta");
-            const indexAtual = parseInt(perguntaAtual.dataset.index);
-            mostrarProxima(indexAtual);
+            mostrarProxima(btn.closest(".pergunta").dataset.index);
         });
     });
 
-    function mostrarProxima(indexAtual) {
-        // Remove a pergunta atual
-        perguntas[indexAtual].classList.add("oculto");
+    // Próxima pergunta
+    function mostrarProxima(i) {
+        const index = parseInt(i);
+        perguntas[index].classList.add("oculto");
 
-        // Verifica se existe próxima pergunta
-        if (indexAtual + 1 < perguntas.length) {
-            perguntas[indexAtual + 1].classList.remove("oculto");
-            indiceAtual = indexAtual + 1;
-            
-            // Se for a última, mostra o botão
+        if (index + 1 < perguntas.length) {
+            perguntas[index + 1].classList.remove("oculto");
+            indiceAtual = index + 1;
+
             if (indiceAtual === perguntas.length - 1) {
-                btnSubmit.classList.remove("oculto");
+                document.getElementById("btnSubmit").classList.remove("oculto");
             }
-
         }
     }
 
-    btnVoltar.addEventListener("click", (event) => {
-        event.preventDefault();
-        mostrarAnterior();
+    // Voltar pergunta
+    document.getElementById("btnVoltar").addEventListener("click", (ev) => {
+        ev.preventDefault();
+
+        if (indiceAtual === 0) return window.location.href = "inicio.php";
+
+        perguntas[indiceAtual].classList.add("oculto");
+        perguntas[indiceAtual - 1].classList.remove("oculto");
+
+        if (indiceAtual === perguntas.length - 1) {
+            document.getElementById("btnSubmit").classList.add("oculto");
+        }
+
+        indiceAtual--;
     });
 
-    function mostrarAnterior() {
-        if (indiceAtual === 0) {
-            //se for a primeira volta pro inicio
-            window.location.href = "inicio.php";
-        }
-        else {
-            perguntas[indiceAtual].classList.add("oculto");
-            perguntas[indiceAtual - 1].classList.remove("oculto");
-            // Se for a última, tira o botão
-            if (indiceAtual === perguntas.length - 1) {
-                btnSubmit.classList.add("oculto");
-            }
-            indiceAtual--;
-        }
-    }
-
+    // Enviar avaliação
     form.addEventListener("submit", async (e) => {
-        e.preventDefault(); // evita o submit normal
+        e.preventDefault();
 
-        const dados = new FormData(form); // pega todos os campos do form
+        const dados = new FormData(form);
         dados.append("acao", "salvarAvaliacao");
-        
-        try {
-            const response = await fetch("../../src/controller/avaliacaoController.php", {
-                method: "POST",
-                body: dados,
-            });
 
-            const result = await response.json();
+        try {
+            const result = await post("../../src/controller/avaliacaoController.php", dados);
 
             if (result.status === "ok") {
                 window.location.href = "obrigado.html";
             } else {
                 alert(result.erro || "Erro ao enviar avaliação!");
             }
+
         } catch (err) {
             console.error(err);
             alert("Falha na comunicação com o servidor.");
         }
     });
 }
+
+
+/* =====================================================
+   PÁGINA DE OBRIGADO — TIMEOUT
+   ===================================================== */
 
 function obigadoTimeout() {
     setTimeout(() => {

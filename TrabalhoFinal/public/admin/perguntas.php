@@ -42,7 +42,7 @@
 
         <div class="modal-btns">
             <button class="btn" onclick="salvarNovaPergunta()">Salvar</button>
-            <button class="btn btn-cancel" onclick="fecharModais()">Cancelar</button>
+            <button class="btn btn-cancel" onclick="closeAllModals()">Cancelar</button>
         </div>
     </div>
 </div>
@@ -65,7 +65,7 @@
 
         <div class="modal-btns">
             <button class="btn" onclick="salvarEdicaoPergunta()">Atualizar</button>
-            <button class="btn btn-cancel" onclick="fecharModais()">Cancelar</button>
+            <button class="btn btn-cancel" onclick="closeAllModals()">Cancelar</button>
         </div>
     </div>
 </div>

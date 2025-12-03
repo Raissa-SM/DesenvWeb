@@ -1,16 +1,16 @@
 <?php
 
     class Dispositivo {
-        private $id_dispositivo;
-        private $id_setor;
-        private $nome_dispositivo;
-        private $status_dispositivo; // 1 - ativo | 0 - inativo
+        private $idDispositivo;
+        private $idSetor;
+        private $nomeDispositivo;
+        private $statusDispositivo; // 1 - ativo | 0 - inativo
 
-    public function __construct($id_setor = null, $nome_dispositivo = null, $status = 1, $id = null) {
-            $this->id_dispositivo = $id;
-            $this->id_setor = $id_setor;
-            $this->nome_dispositivo = $nome_dispositivo;
-            $this->status_dispositivo = $status;
+    public function __construct($idSetor = null, $nomeDispositivo = null, $status = 1, $id = null) {
+            $this->idDispositivo = $id;
+            $this->idSetor = $idSetor;
+            $this->nomeDispositivo = $nomeDispositivo;
+            $this->statusDispositivo = $status;
         }
 
         /* ===== LISTAR TODOS ===== */
@@ -38,9 +38,9 @@
 
             $stmt = $conn->prepare($sql);
             return $stmt->execute([
-                ':setor'  => $this->id_setor,
-                ':nome'   => $this->nome_dispositivo,
-                ':status' => $this->status_dispositivo
+                ':setor'  => $this->idSetor,
+                ':nome'   => $this->nomeDispositivo,
+                ':status' => $this->statusDispositivo
             ]);
         }
 
@@ -69,14 +69,14 @@
             return $stmt->execute([':s' => $status, ':id' => $id]);
         }
 
-        public static function getDescricaoCompleta(PDO $conn, int $id_dispositivo){
+        public static function getDescricaoCompleta(PDO $conn, int $idDispositivo){
             $sql = "SELECT d.nome_dispositivo, s.nome_setor
                     FROM dispositivo d
                     JOIN setor s ON d.id_setor = s.id_setor
                     WHERE d.id_dispositivo = :id";
 
             $stmt = $conn->prepare($sql);
-            $stmt->execute([':id' => $id_dispositivo]);
+            $stmt->execute([':id' => $idDispositivo]);
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($resultado) {
@@ -86,10 +86,10 @@
             return null;
         }
 
-        public static function getSetorByDispositivo(PDO $conn, $id_dispositivo) {
+        public static function getSetorByDispositivo(PDO $conn, $idDispositivo) {
             $sql = "SELECT id_setor FROM dispositivo WHERE id_dispositivo = :id";
             $stmt = $conn->prepare($sql);
-            $stmt->execute([':id' => $id_dispositivo]);
+            $stmt->execute([':id' => $idDispositivo]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
@@ -111,28 +111,28 @@
         }
 
         //GETTERS
-        public function getId_dispositivo () {
-            return $this -> id_dispositivo;
+        public function getIdDispositivo () {
+            return $this -> idDispositivo;
         }
 
-        public function getId_setor () {
-            return $this -> id_setor;
+        public function getIdSetor () {
+            return $this -> idSetor;
         }
 
-        public function getNome_dispositivo () {
-            return $this -> nome_dispositivo;
+        public function getNomeDispositivo () {
+            return $this -> nomeDispositivo;
         }
 
         public function getStatus () {
-            return $this -> status_dispositivo;
+            return $this -> statusDispositivo;
         }
 
-        public function ativar_dispositivo () {
-            $this -> status_dispositivo = '1';
+        public function ativarDispositivo () {
+            $this -> statusDispositivo = '1';
         }
 
-        public function desativar_dispositivo () {
-            $this -> status_dispositivo = '0';
+        public function desativarDispositivo () {
+            $this -> statusDispositivo = '0';
         }
     }
 ?>

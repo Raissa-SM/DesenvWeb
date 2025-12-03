@@ -57,3 +57,4 @@ if (isset($_POST['acao']) && $_POST['acao'] === "loginAdmin") {
 
 header("Location: ../../public/admin/login.php");
 exit;
+?>
