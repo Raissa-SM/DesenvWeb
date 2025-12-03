@@ -114,7 +114,7 @@ Ajuste:
 
 ### Interface (Tablet)
 
-http://localhost/DesenvWeb/TrabalhoFinal/public/index.php
+http://localhost/DesenvWeb/TrabalhoFinal/public/tablet/inicio.php
 
 ### Painel Administrativo
 
